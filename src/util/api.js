@@ -16,6 +16,7 @@ export const movieDbServiceClient = requestConfig => create({
     'Content-Type': 'application/json',
   },
   params: {
-      api_key: process.env.MOVIE_DB_API_KEY
+      api_key: process.env.MOVIE_DB_API_KEY,
+      language: 'en-US'
   }
 })(requestConfig);
