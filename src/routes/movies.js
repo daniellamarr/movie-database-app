@@ -12,5 +12,7 @@ export default ({express}) => {
 
     moviesRouter.get('/', moviesController.getLatestMovies);
 
+    moviesRouter.get('/:id', moviesController.getSingleMovieDetails);
+
     return moviesRouter;
 };
