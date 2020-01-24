@@ -4,6 +4,10 @@ import helmet from "helmet";
 import compression from "compression";
 import {config} from "dotenv";
 
+//Router Definitions
+import MoviesRouter from "./routes/movies";
+
+//Helper Functions
 import {debugLogger, prettyStringify} from "./util/logger";
 
 config();
@@ -50,12 +54,12 @@ app.use((req, res, next) => {
 //Models
 
 //Routers
+app.use(`${URL_PREFIX}/movies`, MoviesRouter({express}));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
 	res.status(404).json({
 		error: ["Path does not exist"],
-		status: 404,
 		message: "This route doesn't exist for you!"
 	});
 	next();
