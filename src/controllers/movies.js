@@ -30,10 +30,16 @@ export default () => {
 			});
 			const moviesResult = {...movieData.data};
 			const sortedMovies = sortMovies(moviesResult.results);
-			moviesResult.results = [...sortedMovies];
+			moviesResult.results = [...sortedMovies].map(movieObj => {
+				return {
+					...movieObj,
+					poster_path: `https://image.tmdb.org/t/p/w500${movieObj.poster_path}`,
+					backdrop_path: `https://image.tmdb.org/t/p/w500${movieObj.backdrop_path}`
+				};
+			});
 			return res.status(200).json({
-                status: 'success',
-                message: 'Latest Movies Fetched',
+				status: "success",
+				message: "Latest Movies Fetched",
 				data: moviesResult
 			});
 		} catch (error) {
