@@ -27,6 +27,20 @@ export default ({express, jwt, userModel, expressValidator, validator}) => {
 		],
 		validator,
 		userController.addToWatchlist
-	);
+    );
+    
+    userRouter.post(
+        "/watchlist/remove",
+        authMiddleware.verifyToken,
+		[
+			expressValidator("movieId")
+				.not()
+				.isEmpty()
+				.withMessage("Movie ID is required")
+		],
+		validator,
+		userController.removeFromWatchlist
+    );
+    
 	return userRouter;
 };
