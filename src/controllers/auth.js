@@ -1,3 +1,5 @@
+import {trimUser} from '../util/user';
+
 /**
  * Auth Controller Initialization Function
  * @param {Object} ControllerParams - ControllerParams
@@ -7,17 +9,6 @@
  * @returns {Object} Controller Object
  */
 export default ({jwt, bcrypt, userModel}) => {
-    //Helper Methods
-    const trimUser = (user) => {
-        return {
-            id: user.dataValues.id,
-            username: user.dataValues.username,
-            email: user.dataValues.email,
-            watchlist: user.dataValues.watchlist,
-            ratedMovies: user.dataValues.ratedMovies
-        };
-    }
-
     //Controller Methods
 	const signup = async (req, res, next) => {
 		try {

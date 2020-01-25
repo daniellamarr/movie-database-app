@@ -61,15 +61,27 @@ export default () => {
 	const getSingleMovieDetails = async (req, res, next) => {
 		try {
 			const {id} = req.params;
-			let movieData = (
-				await movieDbServiceClient({
+			let movieData;
+			try {
+				movieData = (await movieDbServiceClient({
 					url: `/${id}`,
 					method: "get",
 					params: {
 						append_to_response: "credits"
 					}
-				})
-			).data;
+				})).data;
+			} catch (error) {
+				if (error.response.data.status_message.includes("could not be found")) {
+					const movieNotFoundError = new Error(
+						"A movie with that ID can't be found"
+					);
+					movieNotFoundError.statusCode = 404;
+					throw movieNotFoundError;
+				} else {
+					throw error;
+				}
+			}
+
 			movieData = addFullImagePath(movieData);
 			return res.status(200).json({
 				status: "success",

@@ -6,7 +6,7 @@ import {config} from "dotenv";
 import jwt from "jsonwebtoken";
 import {check} from "express-validator";
 import Sequelize from "sequelize";
-import bcrypt from 'bcryptjs';
+import bcrypt from "bcryptjs";
 
 ///Model Definitions
 import UserModel from "./models/user";
@@ -14,6 +14,7 @@ import UserModel from "./models/user";
 //Router Definitions
 import MoviesRouter from "./routes/movies";
 import AuthRouter from "./routes/auth";
+import UserRouter from "./routes/user";
 
 //Helper Functions
 import initializeDatabase from "./util/db";
@@ -85,6 +86,11 @@ app.use(
 	MoviesRouter({express, expressValidator: check, validator})
 );
 
+app.use(
+	`${URL_PREFIX}/user`,
+	UserRouter({express, jwt, userModel, expressValidator: check, validator})
+);
+
 // Express Error Handler
 app.use((error, req, res, next) => {
 	const responseObj = {
@@ -92,6 +98,7 @@ app.use((error, req, res, next) => {
 		message: "Something went wrong",
 		errorMessage: error.message
 	};
+	
 	if (process.env.NODE_ENV === "development") {
 		responseObj.errorStack = error.stack;
 		responseObj.errors = error.errors || error.response || [];
@@ -116,5 +123,8 @@ db.sync()
 		});
 	})
 	.catch(error => {
-		debugLogger(`Failed To connect to Database: ${error.message}`, "movie-app/db");
+		debugLogger(
+			`Failed To connect to Database: ${error.message}`,
+			"movie-app/db"
+		);
 	});
