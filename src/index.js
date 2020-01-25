@@ -98,7 +98,7 @@ app.use((error, req, res, next) => {
 		message: "Something went wrong",
 		errorMessage: error.message
 	};
-	console.log(responseObj);
+	
 	if (process.env.NODE_ENV === "development") {
 		responseObj.errorStack = error.stack;
 		responseObj.errors = error.errors || error.response || [];
