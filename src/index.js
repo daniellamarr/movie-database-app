@@ -10,6 +10,7 @@ import bcrypt from "bcryptjs";
 
 ///Model Definitions
 import UserModel from "./models/user";
+import ReviewModel from "./models/review";
 
 //Router Definitions
 import MoviesRouter from "./routes/movies";
@@ -66,7 +67,8 @@ app.use((req, res, next) => {
 });
 
 //Models
-const userModel = UserModel({Sequelize, db});
+const reviewModel = ReviewModel({Sequelize, db});
+const userModel = UserModel({Sequelize, db, Review: reviewModel});
 
 //Routers
 app.use(
@@ -83,7 +85,14 @@ app.use(
 
 app.use(
 	`${URL_PREFIX}/movies`,
-	MoviesRouter({express, expressValidator: check, validator})
+	MoviesRouter({
+		express,
+		jwt,
+		expressValidator: check,
+		validator,
+		userModel,
+		reviewModel
+	})
 );
 
 app.use(
@@ -98,7 +107,7 @@ app.use((error, req, res, next) => {
 		message: "Something went wrong",
 		errorMessage: error.message
 	};
-	
+
 	if (process.env.NODE_ENV === "development") {
 		responseObj.errorStack = error.stack;
 		responseObj.errors = error.errors || error.response || [];
