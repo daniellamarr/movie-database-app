@@ -11,5 +11,26 @@ body {
   height: 100%;
 }
 
+.home {
+  background: linear-gradient(0deg, rgba($black, 0.88), rgba($black, 0.88));
+  padding-top: 4em;
+  height: 100%;
+}
+
+#header_parent {
+  z-index: 1;
+  background: transparent;
+  position: absolute;
+  right: 0;
+  left: 0;
+  & #navbar {
+    background: rgba($white, 0.46);
+    border: 0px;
+    * {
+      color: white !important;
+    }
+  }
+}
+
 @import "form";
 @import "auth";

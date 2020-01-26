@@ -1,13 +1,18 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { Home, Signup, Login } from "../routes";
+import Header from "./Header";
 
 const Routes = () => (
-  <Switch>
-    <Route exact path="/" component={Home} />
-    <Route exact path="/signup" component={Signup} />
-    <Route exact path="/login" component={Login} />
-  </Switch>
+  <>
+    <Header />
+
+    <Switch>
+      <Route exact path="/" component={Home} />
+      <Route exact path="/signup" component={Signup} />
+      <Route exact path="/login" component={Login} />
+    </Switch>
+  </>
 );
 
 export default Routes;
