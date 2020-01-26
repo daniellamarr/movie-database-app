@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { Formik } from "formik";
 import { Button, Checkbox, Form, Container } from "semantic-ui-react";
 import { FormInput } from "../components";
@@ -12,84 +12,83 @@ const LoginSchema = Yup.object().shape({
   password: Yup.string().required("Password is Required")
 });
 
-const Login = props => {
-  return (
-    <div className="dark_background">
-      <Container>
-        <div className="center_items">
-          <Formik
-            initialValues={{
-              email: "",
-              password: "",
-              aggrement: false
-            }}
-            validationSchema={LoginSchema}
-            // validateOnChange={false}
-            // validateOnBlur={false}
-            onSubmit={async values => {
-              console.log({ values });
-            }}
-          >
-            {({
-              isSubmitting,
-              errors,
-              isValid,
-              touched,
-              values,
-              handleBlur,
-              handleSubmit,
-              handleChange
-            }) => {
-              return (
-                <div className="authForm">
-                  <Form loading={isSubmitting}>
-                    <Form.Field>
-                      <FormInput
-                        error={errors.email}
-                        touched={touched.email}
-                        placeholder="Email Address"
-                        name="email"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.email}
-                      />
-                    </Form.Field>
-                    <Form.Field>
-                      <FormInput
-                        error={errors.password}
-                        touched={touched.password}
-                        type="password"
-                        placeholder="Password"
-                        name="password"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.password}
-                      />
-                    </Form.Field>
-                    <Form.Field>
-                      <Checkbox
-                        onChange={handleChange}
-                        className="agreement_checkbox"
-                        id="aggrement"
-                        // value={values.aggrement}
-                        label="Remember Me"
-                      />
-                    </Form.Field>
-                    <Button onClick={handleSubmit} className="login_button">
-                      Login
-                    </Button>
-                    <Link to="/signup">
-                      <Button type="submit">Sign Up</Button>
-                    </Link>
-                  </Form>
-                </div>
-              );
-            }}
-          </Formik>
-        </div>
-      </Container>
-    </div>
-  );
-};
+class Login extends Component {
+  render() {
+    return (
+      <div className="dark_background">
+        <Container>
+          <div className="center_items">
+            <Formik
+              initialValues={{
+                email: "",
+                password: "",
+                aggrement: false
+              }}
+              validationSchema={LoginSchema}
+              onSubmit={async values => {
+                console.log({ values });
+              }}
+            >
+              {({
+                isSubmitting,
+                errors,
+                isValid,
+                touched,
+                values,
+                handleBlur,
+                handleSubmit,
+                handleChange
+              }) => {
+                return (
+                  <div className="authForm">
+                    <Form loading={isSubmitting}>
+                      <Form.Field>
+                        <FormInput
+                          error={errors.email}
+                          touched={touched.email}
+                          placeholder="Email Address"
+                          name="email"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.email}
+                        />
+                      </Form.Field>
+                      <Form.Field>
+                        <FormInput
+                          error={errors.password}
+                          touched={touched.password}
+                          type="password"
+                          placeholder="Password"
+                          name="password"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.password}
+                        />
+                      </Form.Field>
+                      <Form.Field>
+                        <Checkbox
+                          onChange={handleChange}
+                          className="agreement_checkbox"
+                          id="aggrement"
+                          label="Remember Me"
+                        />
+                      </Form.Field>
+                      <Button onClick={handleSubmit} className="login_button">
+                        Login
+                      </Button>
+                      <Link to="/signup">
+                        <Button type="submit">Sign Up</Button>
+                      </Link>
+                    </Form>
+                  </div>
+                );
+              }}
+            </Formik>
+          </div>
+        </Container>
+      </div>
+    );
+  }
+}
 
 export default Login;
