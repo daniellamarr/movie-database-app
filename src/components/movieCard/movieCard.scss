@@ -1,0 +1,78 @@
+.movie__card__wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+.movie__card{
+    width: 28vmin;
+    border: 1px solid gainsboro;
+    height: 35vmin;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.movie__detail{
+    position: absolute;
+    background: rgba(0, 0, 0, 0.5);
+    width: 25vmin;
+    color: #fff;
+    padding: 1.5vmin;
+    margin-top: 24vmin;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+
+    span{
+        font-size: 1.5vmin;
+    }
+    p{
+        margin: 0;
+        font-size: 3vmin;
+    }
+}
+.movie__detail__on__hover{
+    position: absolute;
+    background: rgba(0, 0, 0, 0.5);
+    width: 25vmin;
+    color: #fff;
+    padding: 1.5vmin;
+    height: 32vmin;
+    display: flex;
+    flex-flow: column;
+    // justify-content: space-between;
+    border-radius: 4px;
+
+    span{
+        font-size: 1.5vmin;
+    }
+    p{
+        margin: 0;
+        font-size: 3vmin;
+    }
+    .play{
+        display: flex;
+        justify-content: center;
+        height: 100%;
+        margin-top: 5vmin;
+        img{
+            height: 7vmin;
+        }
+    }
+    .seeMore{
+        display: flex;
+        justify-content: space-between;
+    }
+}
+.movie__img{
+    height: 100%;
+    object-fit: cover;
+}
+.card__btn{
+    justify-content: space-around;
+    width: 100%;
+    button{
+        border: 1px solid rgba(207, 180, 5, 1);
+        font-size: 8px;
+        background: inherit;
+        color: #fff;
+        margin-left: 5px;
+    }
+}
