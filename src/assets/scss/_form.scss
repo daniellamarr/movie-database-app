@@ -1,4 +1,29 @@
 .authForm {
-  // min-width: "40%";
-  // border: 1px black groove;
+  width: 80%;
 }
+
+.no_space_input {
+  margin: 0 !important;
+}
+.ui.form .field {
+  margin: 0;
+}
+
+.ui.form .field input {
+  border: 1px solid $light_grey;
+  border-radius: 0;
+  background: transparent;
+  color: $text_color;
+}
+.error_text {
+  color: red;
+}
+.agreement_checkbox {
+  margin: 1rem 0;
+}
+.ui.button.login_button {
+  background-color: $yellow;
+  margin-right: 30px;
+}
+// .login_button {
+// }

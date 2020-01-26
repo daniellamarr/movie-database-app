@@ -5,36 +5,25 @@ import { FormInput } from "../components";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
 
-const SignupSchema = Yup.object().shape({
-  name: Yup.string()
-    .min(2, "Name is too Short")
-    .max(70, "Name is too Long")
-    .required("Name is required"),
+const LoginSchema = Yup.object().shape({
   email: Yup.string()
     .email("Invalid email")
     .required("Email is Required"),
-  password: Yup.string().required("Password is Required"),
-  phone: Yup.number()
-    .typeError("Enter number")
-    .min(10, "Phone number is too short")
-    .max(11, "Phone number is too long")
-    .required("Phone number is required")
+  password: Yup.string().required("Password is Required")
 });
 
-const Signup = props => {
+const Login = props => {
   return (
     <div className="dark_background">
       <Container>
         <div className="center_items">
           <Formik
             initialValues={{
-              name: "",
-              phone: "",
               email: "",
               password: "",
               aggrement: false
             }}
-            validationSchema={SignupSchema}
+            validationSchema={LoginSchema}
             // validateOnChange={false}
             // validateOnBlur={false}
             onSubmit={async values => {
@@ -54,29 +43,6 @@ const Signup = props => {
               return (
                 <div className="authForm">
                   <Form loading={isSubmitting}>
-                    <Form.Field>
-                      <FormInput
-                        error={errors.name}
-                        touched={touched.name}
-                        onChange={handleChange}
-                        placeholder="Name"
-                        name="name"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.name}
-                      />
-                    </Form.Field>
-                    <Form.Field>
-                      <FormInput
-                        error={errors.phone}
-                        touched={touched.phone}
-                        onChange={handleChange}
-                        placeholder="Phone"
-                        name="phone"
-                        onBlur={handleBlur}
-                        value={values.phone}
-                      />
-                    </Form.Field>
                     <Form.Field>
                       <FormInput
                         error={errors.email}
@@ -109,16 +75,12 @@ const Signup = props => {
                         label="Remember Me"
                       />
                     </Form.Field>
-                    <Link to="/login">
-                      <Button
-                        className="login_button"
-                      >
-                        Login
-                      </Button>
-                    </Link>
-                    <Button onClick={handleSubmit} type="submit">
-                      Sign Up
+                    <Button onClick={handleSubmit} className="login_button">
+                      Login
                     </Button>
+                    <Link to="/signup">
+                      <Button type="submit">Sign Up</Button>
+                    </Link>
                   </Form>
                 </div>
               );
@@ -130,4 +92,4 @@ const Signup = props => {
   );
 };
 
-export default Signup;
+export default Login;

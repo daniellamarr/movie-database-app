@@ -1,0 +1,17 @@
+@import "variables";
+
+.dark_background {
+  height: 100%;
+  padding-top: 20%;
+  background: linear-gradient(0deg, rgba($black, 0.88), rgba($black, 0.88)),
+    url("../images/component.png");
+  background-size: cover;
+  // background-color: $grey;
+  // background-image: url("../images/component.png");
+}
+
+.center_items {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

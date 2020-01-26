@@ -1,6 +1,15 @@
+@import "variables";
 * {
   padding: 0;
   margin: 0;
 }
 
-@import "form"
+body {
+  height: 100%;
+}
+#app {
+  height: 100%;
+}
+
+@import "form";
+@import "auth";
