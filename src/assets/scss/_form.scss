@@ -1,5 +1,11 @@
 .authForm {
-  width: 80%;
+  width: 50%;
+  .ui.fluid.input > input {
+    font-size: 20px;
+  }
+  .ui.fluid.input > input:focus {
+    border-left: 4px solid yellow;
+  }
 }
 
 .no_space_input {
@@ -16,7 +22,7 @@
   color: $text_color;
 }
 .error_text {
-  color: red;
+  color: red !important;
 }
 .agreement_checkbox {
   margin: 1rem 0;

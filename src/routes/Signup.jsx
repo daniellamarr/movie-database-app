@@ -113,6 +113,10 @@ class Signup extends Component {
                       <Button onClick={handleSubmit} type="submit">
                         Sign Up
                       </Button>
+                      <p className="center">
+                        By signing up you agree to our Terms and Conditions &
+                        privacy policy
+                      </p>
                     </Form>
                   </div>
                 );
