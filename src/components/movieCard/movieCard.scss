@@ -4,9 +4,9 @@
     justify-content: space-evenly;
 }
 .movie__card{
-    width: 28vmin;
+    width: 25vmin;
     border: 1px solid gainsboro;
-    height: 35vmin;
+    height: 36.45vmin;
     border-radius: 4px;
     cursor: pointer;
 }
@@ -34,7 +34,7 @@
     width: 25vmin;
     color: #fff;
     padding: 1.5vmin;
-    height: 32vmin;
+    height: 36.2vmin;
     display: flex;
     flex-flow: column;
     border-radius: 4px;
@@ -73,5 +73,6 @@
         background: inherit;
         color: #fff;
         margin-left: 5px;
+        padding: 2px;
     }
 }
