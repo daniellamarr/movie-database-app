@@ -7,9 +7,11 @@ import "./assets/scss/index.scss";
 export default class App extends Component {
   render() {
     return (
-      <Router>
-        <Routes />
-      </Router>
+      <>
+        <Router>
+          <Routes />
+        </Router>
+      </>
     );
   }
 }
