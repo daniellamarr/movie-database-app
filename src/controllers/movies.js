@@ -25,7 +25,7 @@ export default ({userModel, reviewModel}) => {
 
 	const addFullImagePath = movieObj => {
 		const credits = {...movieObj?.credits};
-		Object.keys(credits).forEach((personListIndex) => {
+		Object.keys(credits).forEach(personListIndex => {
 			const modifiedPersonList = credits[personListIndex].map(personObj => {
 				return {
 					...personObj,
@@ -55,9 +55,17 @@ export default ({userModel, reviewModel}) => {
 	const getLatestMovies = async (req, res, next) => {
 		try {
 			const {page} = req.query;
+
+			const genreListResult = (
+				await movieDbServiceClient({
+					url: "/genre/movie/list",
+					method: "get"
+				})
+			).data;
+
 			const moviesResult = (
 				await movieDbServiceClient({
-					url: "/now_playing",
+					url: "/movie/now_playing",
 					method: "get",
 					params: {
 						page
@@ -66,6 +74,17 @@ export default ({userModel, reviewModel}) => {
 			).data;
 			const sortedMovies = sortMovies(moviesResult.results);
 			moviesResult.results = [...sortedMovies].map(addFullImagePath);
+			moviesResult.results = [...moviesResult.results].map(movieObj => {
+				// Get Genre for each genre ID in movie Object
+				const genres = movieObj.genre_ids.map(genreId => {
+					const genreIndex = genreListResult.genres.findIndex(
+						genreObj => genreObj.id === genreId
+					);
+					return genreListResult.genres[genreIndex];
+				});
+				
+				return {...movieObj, genres };
+			});
 			return res.status(200).json({
 				status: "success",
 				message: "Latest Movies Fetched",
@@ -84,7 +103,7 @@ export default ({userModel, reviewModel}) => {
 			try {
 				movieData = (
 					await movieDbServiceClient({
-						url: `/${id}`,
+						url: `/movie/${id}`,
 						method: "get",
 						params: {
 							append_to_response: "credits"
@@ -128,7 +147,7 @@ export default ({userModel, reviewModel}) => {
 
 			try {
 				await movieDbServiceClient({
-					url: `/${req.body.movieId}`,
+					url: `/movie/${req.body.movieId}`,
 					method: "get"
 				});
 			} catch (error) {
