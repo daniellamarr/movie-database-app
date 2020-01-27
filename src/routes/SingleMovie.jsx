@@ -3,8 +3,8 @@ import Header from '../components/Header';
 import Text from '../components/Text';
 import Rating from '../components/Rating';
 import Tag from '../components/Tag';
-import MovieCard from '../components/MovieCard';
 import CastCard from '../components/CastCard';
+import {apiServiceClient} from '../util/axios-client';
 
 const cast = [
   {
@@ -60,48 +60,86 @@ const cast = [
 ]
 
 export default class SingleMovie extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			movie: {},
+			loading: false
+		};
+  }
+
+  async getSingleMovie() {
+    const { movieId } = this.props.match.params;
+		this.setState({loading: true});
+		const movieData = await apiServiceClient({
+			url: `/movies/${movieId}`,
+			method: "get"
+		});
+    this.setState({movie: movieData.data.data, loading: false});
+    console.log(movieData)
+  }
+
+  componentDidMount() {
+    this.getSingleMovie();
+  }
+
   render() {
+    const {movie} = this.state;
+    const rating = Math.floor((movie.vote_average / 10) * 5);
     return (
       <div>
         <Header />
         <main id="landing">
-          <section id="primary-movie">
+          <section id="primary-movie"
+            style={{backgroundImage: `url(${movie.backdrop_path})`}}>
             <div className="primary-movie-details">
               <div className="movie-title">
                 <Text color="#fff" fontSize={40}>
-                  The Source
+                  {this.state.movie.title}
                 </Text>
               </div>
               <div className="movie-reviews">
-                <Rating checkType="checked" />
+                <div className="rating">
+                  <Rating noOfStars={rating} checkType="checked" />
+                </div>
+                <div className="runtime">
+                  <Text color="#fff" fontSize={16}>{movie.runtime} mins</Text>
+                </div>
               </div>
-              <div className="movie-credits">
-                <Text color="#fff">
-                  Directed by: Daniel Lamarr
-                </Text>
-                <Text color="#fff">
-                  Written by: Daniel Lamarr
-                </Text>
+              <div className="credits-watchlist">
+                <div className="movie-credits">
+                  <Text color="#fff" fontSize={25}>
+                    {new Date(movie.release_date).getFullYear()}
+                  </Text>
+                </div>
+                <div className="movie-watchlist">
+                  <button>
+                    Add to watchlist
+                  </button>
+                </div>
               </div>
               <div className="tags">
-                <Tag>Comedy</Tag>
-                <Tag>Drama</Tag>
+                {movie.genres &&
+                  movie.genres.map(genre => (
+                    <Tag key={genre.id}>{genre.name}</Tag>
+                  ))}
               </div>
               <div className="plot">
-                <Text color="#fff" fontSize={20}>PLOT</Text>
+                <Text color="#fff" fontSize={20}>Overview</Text>
                 <Text color="#fff">
-                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eg Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate egLorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. 
+                  {movie.overview}
                 </Text>
               </div>
             </div>
+            <div className="movie-photo" style={{backgroundImage: `url(${movie.poster_path})`}}></div>
           </section>
           <section id="movie-cast">
             <div className="cast-title">
               <Text color="#fff">Cast</Text>
             </div>
             <div className="casts">
-              {cast.map(cs => (
-                <CastCard cast={cs} />
+              {movie.credits && movie.credits.cast.map(cast => (
+                <CastCard cast={cast} />
               ))}
             </div>
           </section>
