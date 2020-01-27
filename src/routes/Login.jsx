@@ -14,7 +14,7 @@ const LoginSchema = Yup.object().shape({
   password: Yup.string().required("Password is Required")
 });
 
-const Login = () => {
+const Login = (props) => {
   const [state, setState] = useState({});
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -41,7 +41,8 @@ const Login = () => {
       if (res.data.status === "success") {
         setLoading(false)
         var token = res.data.data.token
-        var userName = res.data.data.username
+        var userName = res.data.username
+        console.log("for what",token)
         localStorage.setItem('token', token);
         localStorage.setItem('userName', userName);
         props.history.push("/")

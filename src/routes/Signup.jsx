@@ -31,12 +31,12 @@ const Signup = (props) => {
       console.log("message", res)
       if (res.data.status === "success") {
         setLoading(false)
-        var token = res.data.data.token
+        var token = res.data.token
         var userName = res.data.data.username
+        console.log("for what",token)
         localStorage.setItem('token', token);
         localStorage.setItem('userName', userName);
         props.history.push("/")
-
       }
     }).catch((err)=>{
       alert(err)
