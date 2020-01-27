@@ -1,9 +1,11 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik } from "formik";
 import { Button, Checkbox, Form, Container } from "semantic-ui-react";
 import { FormInput } from "../components";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
+import Axios from "axios";
+
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
@@ -12,83 +14,71 @@ const LoginSchema = Yup.object().shape({
   password: Yup.string().required("Password is Required")
 });
 
-class Login extends Component {
-  render() {
-    return (
-      <div className="dark_background">
-        <Container>
-          <div className="center_items">
-            <Formik
-              initialValues={{
-                email: "",
-                password: "",
-                aggrement: false
-              }}
-              validationSchema={LoginSchema}
-              onSubmit={async values => {
-                console.log({ values });
-              }}
-            >
-              {({
-                isSubmitting,
-                errors,
-                isValid,
-                touched,
-                values,
-                handleBlur,
-                handleSubmit,
-                handleChange
-              }) => {
-                return (
-                  <div className="authForm">
-                    <Form loading={isSubmitting}>
-                      <Form.Field>
-                        <FormInput
-                          error={errors.email}
-                          touched={touched.email}
-                          placeholder="Email Address"
-                          name="email"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.email}
-                        />
-                      </Form.Field>
-                      <Form.Field>
-                        <FormInput
-                          error={errors.password}
-                          touched={touched.password}
-                          type="password"
-                          placeholder="Password"
-                          name="password"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.password}
-                        />
-                      </Form.Field>
-                      <Form.Field>
-                        <Checkbox
-                          onChange={handleChange}
-                          className="agreement_checkbox"
-                          id="aggrement"
-                          label="Remember Me"
-                        />
-                      </Form.Field>
-                      <Button onClick={handleSubmit} className="login_button">
-                        Login
-                      </Button>
-                      <Link to="/signup">
-                        <Button type="submit">Sign Up</Button>
-                      </Link>
-                    </Form>
-                  </div>
-                );
-              }}
-            </Formik>
-          </div>
-        </Container>
+const Login = () => {
+  const [state, setState] = useState({});
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    let token = localStorage.getItem('token');
+    if (token) {
+      props.history.push("/")
+    }
+  }, [])
+
+  const handleChange = (e) => {
+    e.preventDefault()
+    setState({ ...state, [e.target.id]: e.target.value })
+    console.log(state)
+  };
+  const handleSubmit = (e) => {
+    setLoading(true)
+    e.preventDefault();
+    Axios.post(`https://thesource-movie-database-app.herokuapp.com/api/v1/auth/login`, state, {
+      "headers": {
+        "Content-Type": "application/json",
+      }
+    }).then((res) => {
+      console.log("message", res)
+      if (res.data.status === "success") {
+        setLoading(false)
+        var token = res.data.data.token
+        var userName = res.data.data.username
+        localStorage.setItem('token', token);
+        localStorage.setItem('userName', userName);
+        props.history.push("/")
+
+      }
+    }).catch((err) => {
+      alert(err)
+      setLoading(false)
+    })
+  };
+
+
+  return (
+    <div className="dark_background" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+      <div>
+        <div>
+          <input className="auth__input" type='email' id="email" onChange={handleChange} placeholder="User Name" onChange={handleChange} style={{ background: "inherit" }} />
+        </div>
+        <div>
+          <input className="auth__input" type="password" id="password" placeholder="Password" onChange={handleChange} style={{ background: "inherit" }} />
+        </div>
+        <div>
+          <input type="checkbox" />
+          <label>Remember me</label>
+        </div>
+        <div>
+          <Button className="login_button" onClick={handleSubmit}>{
+            loading ? "Authenticating" : "Login"
+          }</Button>
+        </div>
+        <div>
+          <span style={{ color: "#ffffff", opacity: "0.5", letterSpacing: "0.46px", font: "Bold 16px/29px", marginRight: "1vw" }}>Dont have an account?</span>
+          <span style={{ textDecoration: "underline", letterSpacing: "0.46px", color: "#000000" }}><Link to="/signup">Sign up</Link></span>
+        </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default Login;

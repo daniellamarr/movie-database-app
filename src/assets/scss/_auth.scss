@@ -2,7 +2,7 @@
 
 .dark_background {
   height: 100%;
-  padding-top: 20%;
+  // padding-top: 20%;
   background: linear-gradient(0deg, rgba($black, 0.88), rgba($black, 0.88)),
     url("../images/component.png");
   background-size: cover;
@@ -22,4 +22,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.auth__input{
+  background: inherit;
+    width: 72vmin;
+    height: 7vmin;
+    padding: 2vmin;
+    margin: 1vmin 0;
 }
