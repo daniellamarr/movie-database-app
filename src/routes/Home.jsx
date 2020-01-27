@@ -53,11 +53,18 @@ export default class Home extends Component {
 										checkType="checked"
 									/>
 								</div>
-								<div className="movie-credits">
-									<Text color="#fff" fontSize={25}>
-										{new Date(latestMovie.release_date).getFullYear()}
-									</Text>
-								</div>
+                <div className="credits-watchlist">
+                  <div className="movie-credits">
+                    <Text color="#fff" fontSize={25}>
+                      {new Date(latestMovie.release_date).getFullYear()}
+                    </Text>
+                  </div>
+                  <div className="movie-watchlist">
+                    <button>
+                      Add to watchlist
+                    </button>
+                  </div>
+                </div>
 								<div className="tags">
 									{latestMovie.genres &&
 										latestMovie.genres.map(genre => (
@@ -65,6 +72,7 @@ export default class Home extends Component {
 										))}
 								</div>
 							</div>
+              <div className="movie-photo" style={{backgroundImage: `url(${latestMovie.poster_path})`}}></div>
 						</section>
 						<section id="latest-movies">
 							<div className="latest-header">
