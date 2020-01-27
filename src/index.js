@@ -71,7 +71,7 @@ const reviewModel = ReviewModel({Sequelize, db});
 const userModel = UserModel({Sequelize, db, Review: reviewModel});
 
 //Routers
-app.use('/', (req,res) => {
+app.get('/', (req,res) => {
 	return res.status(200).send(`
 		<h2>Welcome to Movie Database App API</h2>
 	`);
