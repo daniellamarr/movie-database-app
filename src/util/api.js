@@ -9,14 +9,14 @@ import { create } from 'axios';
  * @param {Object} requestConfig.data data to send to backend
  * @return {Promise<{ data, headers, status, statusText, config }>}
  */
-export const movieDbServiceClient = requestConfig => create({
-  baseURL: `https://api.themoviedb.org/3`,
+export const movieDbServiceClient = (requestConfig) => create({
+  baseURL: 'https://api.themoviedb.org/3',
   timeout: 150000,
   headers: {
     'Content-Type': 'application/json',
   },
   params: {
-      api_key: process.env.MOVIE_DB_API_KEY,
-      language: 'en-US'
-  }
+    api_key: process.env.MOVIE_DB_API_KEY,
+    language: 'en-US',
+  },
 })(requestConfig);

@@ -1,4 +1,4 @@
-import MoviesController from "../controllers/movies";
+import MoviesController from '../controllers/movies';
 import AuthMiddleware from '../middlewares/auth';
 
 /**
@@ -12,50 +12,52 @@ import AuthMiddleware from '../middlewares/auth';
  * @param {Object} RouterParams.reviewModel - Initialized Review Model
  * @returns {Object} ExpressRouter
  */
-export default ({express, jwt, expressValidator, validator, userModel, reviewModel}) => {
-	const moviesRouter = express.Router();
-	const authMiddleware = AuthMiddleware({jwt});
-	const moviesController = MoviesController({userModel, reviewModel});
+export default ({
+  express, jwt, expressValidator, validator, userModel, reviewModel,
+}) => {
+  const moviesRouter = express.Router();
+  const authMiddleware = AuthMiddleware({ jwt });
+  const moviesController = MoviesController({ userModel, reviewModel });
 
-	moviesRouter.get(
-		"/",
-		[
-			expressValidator("page")
-				.not()
-				.isEmpty()
-				.withMessage("Page No is Required")
-		],
-		validator,
-		moviesController.getLatestMovies
-	);
+  moviesRouter.get(
+    '/',
+    [
+      expressValidator('page')
+        .not()
+        .isEmpty()
+        .withMessage('Page No is Required'),
+    ],
+    validator,
+    moviesController.getLatestMovies,
+  );
 
-	moviesRouter.get(
-		"/:id",
-		[
-			expressValidator("id")
-				.not()
-				.isEmpty()
-				.withMessage("Movie ID is required")
-		],
-		validator,
-		moviesController.getSingleMovieDetails
-	);
+  moviesRouter.get(
+    '/:id',
+    [
+      expressValidator('id')
+        .not()
+        .isEmpty()
+        .withMessage('Movie ID is required'),
+    ],
+    validator,
+    moviesController.getSingleMovieDetails,
+  );
 
-	moviesRouter.post(
-		"/review",
-		authMiddleware.verifyToken,
-		[
-			expressValidator("movieId")
-				.trim()
-				.isNumeric()
-				.withMessage("Movie ID is required"),
-			expressValidator("review")
-				.trim()
-				.isString()
-		],
-		validator,
-		moviesController.reviewMovie
-	);
+  moviesRouter.post(
+    '/review',
+    authMiddleware.verifyToken,
+    [
+      expressValidator('movieId')
+        .trim()
+        .isNumeric()
+        .withMessage('Movie ID is required'),
+      expressValidator('review')
+        .trim()
+        .isString(),
+    ],
+    validator,
+    moviesController.reviewMovie,
+  );
 
-	return moviesRouter;
+  return moviesRouter;
 };

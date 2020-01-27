@@ -1,8 +1,5 @@
 {
-	"parserOptions": {
-		// Required for certain syntax usages
-		"ecmaVersion": 2018
-	},
+	"parser":"babel-eslint",
 	"extends": ["airbnb-base"],
 	"rules": {
 		// Removed rule "disallow the use of console" from recommended eslint rules
@@ -115,11 +112,13 @@
 		"promise/catch-or-return": "off",
 
 		// Warn against nested then() or catch() statements
-		"promise/no-nesting": 1,
+		"promise/no-nesting": "off",
 		"no-plusplus": "off",
 		"no-return-assign": "off",
 		"no-tabs": "off",
 		"prefer-destructuring": "off",
-		"no-restricted-syntax": "off"
+		"no-restricted-syntax": "off",
+		"camelcase": "off",
+		"import/prefer-default-export": "off"
 	}
 }

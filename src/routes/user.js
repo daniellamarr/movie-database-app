@@ -1,4 +1,4 @@
-import UserController from "../controllers/user";
+import UserController from '../controllers/user';
 import AuthMiddleware from '../middlewares/auth';
 
 /**
@@ -11,36 +11,38 @@ import AuthMiddleware from '../middlewares/auth';
  * @param  {Object} RouterParams.validator - Custom Validator
  * @returns {Object} ExpressRouter
  */
-export default ({express, jwt, userModel, expressValidator, validator}) => {
-    const userRouter = express.Router();
-    const authMiddleware = AuthMiddleware({jwt});
-	const userController = UserController({userModel});
+export default ({
+  express, jwt, userModel, expressValidator, validator,
+}) => {
+  const userRouter = express.Router();
+  const authMiddleware = AuthMiddleware({ jwt });
+  const userController = UserController({ userModel });
 
-	userRouter.post(
-        "/watchlist/add",
-        authMiddleware.verifyToken,
-		[
-			expressValidator("movieId")
-				.not()
-				.isEmpty()
-				.withMessage("Movie ID is required")
-		],
-		validator,
-		userController.addToWatchlist
-    );
-    
-    userRouter.post(
-        "/watchlist/remove",
-        authMiddleware.verifyToken,
-		[
-			expressValidator("movieId")
-				.not()
-				.isEmpty()
-				.withMessage("Movie ID is required")
-		],
-		validator,
-		userController.removeFromWatchlist
-    );
-    
-	return userRouter;
+  userRouter.post(
+    '/watchlist/add',
+    authMiddleware.verifyToken,
+    [
+      expressValidator('movieId')
+        .not()
+        .isEmpty()
+        .withMessage('Movie ID is required'),
+    ],
+    validator,
+    userController.addToWatchlist,
+  );
+
+  userRouter.post(
+    '/watchlist/remove',
+    authMiddleware.verifyToken,
+    [
+      expressValidator('movieId')
+        .not()
+        .isEmpty()
+        .withMessage('Movie ID is required'),
+    ],
+    validator,
+    userController.removeFromWatchlist,
+  );
+
+  return userRouter;
 };
