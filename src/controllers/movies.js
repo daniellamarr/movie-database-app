@@ -24,7 +24,19 @@ export default ({userModel, reviewModel}) => {
 	};
 
 	const addFullImagePath = movieObj => {
-		return {
+		const credits = {...movieObj?.credits};
+		Object.keys(credits).forEach((personListIndex) => {
+			const modifiedPersonList = credits[personListIndex].map(personObj => {
+				return {
+					...personObj,
+					profile_path: personObj.profile_path
+						? `https://image.tmdb.org/t/p/w500${personObj.profile_path}`
+						: null
+				};
+			});
+			credits[personListIndex] = [...modifiedPersonList];
+		});
+		const modifiedMovieObj = {
 			...movieObj,
 			poster_path: movieObj.poster_path
 				? `https://image.tmdb.org/t/p/w500${movieObj.poster_path}`
@@ -33,6 +45,10 @@ export default ({userModel, reviewModel}) => {
 				? `https://image.tmdb.org/t/p/w500${movieObj.backdrop_path}`
 				: null
 		};
+		if (credits.casts || credits.crew) {
+			modifiedMovieObj.credits = {...credits};
+		}
+		return modifiedMovieObj;
 	};
 
 	// Controller Methods
