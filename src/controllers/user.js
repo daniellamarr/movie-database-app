@@ -22,7 +22,7 @@ export default ({userModel}) => {
 
 			try {
 				await movieDbServiceClient({
-					url: `/${req.body.movieId}`,
+					url: `/movie/${req.body.movieId}`,
 					method: "get"
 				});
 			} catch (error) {
@@ -68,7 +68,7 @@ export default ({userModel}) => {
             
             try {
 				await movieDbServiceClient({
-					url: `/${req.body.movieId}`,
+					url: `/movie/${req.body.movieId}`,
 					method: "get"
 				});
 			} catch (error) {

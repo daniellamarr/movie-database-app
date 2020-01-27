@@ -10,7 +10,7 @@ import { create } from 'axios';
  * @return {Promise<{ data, headers, status, statusText, config }>}
  */
 export const movieDbServiceClient = requestConfig => create({
-  baseURL: `https://api.themoviedb.org/3/movie`,
+  baseURL: `https://api.themoviedb.org/3`,
   timeout: 150000,
   headers: {
     'Content-Type': 'application/json',
