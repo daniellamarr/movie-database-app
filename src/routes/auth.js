@@ -1,4 +1,4 @@
-import AuthController from "../controllers/auth";
+import AuthController from '../controllers/auth';
 
 /**
  * Auth Router Initialization Function
@@ -12,56 +12,56 @@ import AuthController from "../controllers/auth";
  * @returns {Object} ExpressRouter
  */
 export default ({
-	express,
-	jwt,
-	bcrypt,
-	userModel,
-	expressValidator,
-	validator
+  express,
+  jwt,
+  bcrypt,
+  userModel,
+  expressValidator,
+  validator,
 }) => {
-	const authRouter = express.Router();
-	const authController = AuthController({jwt, bcrypt, userModel});
+  const authRouter = express.Router();
+  const authController = AuthController({ jwt, bcrypt, userModel });
 
-	authRouter.post(
-		"/signup",
-		[
-			expressValidator("username")
-				.trim()
-				.isString(),
-			expressValidator("email")
-				.isEmail()
-				.withMessage("Please enter a valid email")
-				.normalizeEmail({
-					gmail_remove_subaddress: false,
-					gmail_remove_dots: false
-				}),
-			expressValidator("password")
-				.trim()
-				.isLength({min: 7})
-				.withMessage("Password should be 7 characters and above")
-		],
-		validator,
-		authController.signup
-	);
+  authRouter.post(
+    '/signup',
+    [
+      expressValidator('username')
+        .trim()
+        .isString(),
+      expressValidator('email')
+        .isEmail()
+        .withMessage('Please enter a valid email')
+        .normalizeEmail({
+          gmail_remove_subaddress: false,
+          gmail_remove_dots: false,
+        }),
+      expressValidator('password')
+        .trim()
+        .isLength({ min: 7 })
+        .withMessage('Password should be 7 characters and above'),
+    ],
+    validator,
+    authController.signup,
+  );
 
-	authRouter.post(
-		"/login",
-		[
-			expressValidator("email")
-				.isEmail()
-				.withMessage("Please enter a valid email")
-				.normalizeEmail({
-					gmail_remove_subaddress: false,
-					gmail_remove_dots: false
-				}),
-			expressValidator("password")
-				.trim()
-				.isLength({min: 7})
-				.withMessage("Password should be 7 characters and above")
-		],
-		validator,
-		authController.login
-	);
+  authRouter.post(
+    '/login',
+    [
+      expressValidator('email')
+        .isEmail()
+        .withMessage('Please enter a valid email')
+        .normalizeEmail({
+          gmail_remove_subaddress: false,
+          gmail_remove_dots: false,
+        }),
+      expressValidator('password')
+        .trim()
+        .isLength({ min: 7 })
+        .withMessage('Password should be 7 characters and above'),
+    ],
+    validator,
+    authController.login,
+  );
 
-	return authRouter;
+  return authRouter;
 };
