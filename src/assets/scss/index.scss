@@ -1,0 +1,285 @@
+@import 'variables.scss';
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: $primary-font;
+}
+
+a {
+  color: $primary-color;
+}
+
+input, button, textarea {
+  outline: none;
+}
+
+button {
+  background-color: $primary-color;
+  border: none;
+  color: $white;
+  font-family: $primary-font;
+  border-radius: 2px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+header {
+  position: fixed;
+  width: 100%;
+  height: 60px;
+  background-color: $black;
+  z-index: 2;
+
+  .logo {
+    position: absolute;
+    left: $default-padding;
+    top: 20px;
+    color: $primary-color;
+  }
+}
+
+nav {
+  position: absolute;
+  right: $default-padding;
+  top: 18px;
+
+  li {
+    display: inline;
+    margin-right: 30px;
+
+    input {
+      background-color: $white;
+      border: 0;
+      padding: 5px;
+      border-radius: 3px;
+      font-family: $primary-font;
+    }
+  }
+
+  li:last-child {
+    margin-right: 0;
+  }
+}
+
+main {
+  &#landing {
+    background-color: $black;
+    height: auto;
+  }
+}
+
+#primary-movie {
+  background-position: 100% 60%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply;
+  background-color: rgba(0, 0, 0, 0.7);
+  height: 70vh;
+  display: flex;
+
+  .primary-movie-details {
+    width: 70%;
+    padding: $default-padding;
+    padding-top: 150px;
+
+    .movie-reviews {
+      padding-bottom: 5px;
+      border-bottom: 1px solid $white;
+      display: flex;
+
+      .rating {
+        width: 80%;
+      }
+    }
+
+    .credits-watchlist {
+      display: flex;
+
+      .movie-credits {
+        margin-top: 20px;
+        width: 90%;
+      }
+
+      .movie-watchlist {
+        margin-top: auto;
+
+        button {
+          width: 150px;
+        }
+      }
+    }
+
+    .tags {
+      margin-top: 30px;
+    }
+
+    .plot {
+      margin-top: 30px;
+
+      p:first-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .movie-photo {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-blend-mode: multiply;
+    height: 400px;
+    width: 300px;
+    margin-top: 100px;
+  }
+}
+
+#latest-movies {
+  padding: $default-padding;
+  padding-top: 0;
+  margin-top: -70px;
+
+  .latest-header {
+    margin-bottom: 20px;
+  }
+
+  .movies {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .movie-card {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 23%;
+    height: 400px;
+    position: relative;
+    border-radius: 7px;
+    margin-right: 2%;
+    margin-bottom: 20px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.25);
+    transition: 0.5s all;
+
+    &:nth-of-type(4) {
+      margin-right: 0;
+    }
+
+    .movie-card-title {
+      background-color: rgba(0, 0, 0, 0.5);
+      position: absolute;
+      bottom: 0;
+      padding: 10px;
+      width: 100%;
+
+      p:first-child {
+        margin-bottom: 0;
+      }
+
+      a {
+        p:first-child {
+          margin-bottom: 5px;
+          transition: 0.3s all;
+
+          &:hover {
+            color: $primary-color !important;
+          }
+        }
+      }
+    }
+
+    &:hover {
+      margin-top: -20px;
+    }
+  }
+}
+
+#movie-cast {
+  padding: $default-padding;
+
+  .cast-title {
+    margin-bottom: 20px;
+  }
+
+  .casts {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .cast-card {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 18%;
+    height: 200px;
+    position: relative;
+    border-radius: 4px;
+    margin-right: 2%;
+    margin-bottom: 20px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.25);
+
+    &:nth-of-type(5) {
+      margin-right: 0;
+    }
+
+    .cast-card-title {
+      background-color: rgba(0, 0, 0, 0.5);
+      position: absolute;
+      bottom: 0;
+      padding: 10px;
+      width: 100%;
+
+      p:first-child {
+        margin-bottom: 0;
+      }
+
+      p:nth-child(2) {
+        margin-bottom: 5px;
+      }
+    }
+  }
+}
+
+.loadMore {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.dark_background {
+  .notFound {
+    p:first-child {
+      letter-spacing: 10px;
+      margin-bottom: 5px;
+    }
+
+    p:nth-child(2) {
+      letter-spacing: 3px;
+    }
+  }
+}
+
+.tag {
+  display: inline;
+  padding: 5px;
+  color: $white;
+  font-size: 11px;
+  border: 2px solid $primary-color;
+  text-transform: uppercase;
+  margin-right: 5px;
+}
+
+.star {
+  color: gold;
+  margin-right: 3px;
+}
+
+.star.unchecked {
+  color: white;
+}
+
+.star.fa-star {
+  font-size: 22px;
+}
+
+@import "form";
+@import "auth";
