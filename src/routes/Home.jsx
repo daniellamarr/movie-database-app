@@ -11,25 +11,37 @@ export default class Home extends Component {
 		super(props);
 		this.state = {
 			movies: [],
-			loading: false
+      loading: false,
+      page: 1,
+      loadMore: false
 		};
 	}
 
-	async getMovies() {
-		this.setState({loading: true});
+	async getMovies(page = 1, loading = true, loadMore = false) {
+		this.setState({loading, loadMore});
 		const movieData = await apiServiceClient({
 			url: "/movies",
 			method: "get",
 			params: {
-				page: 1
+				page
 			}
-		});
-		this.setState({movies: movieData.data.data.results, loading: false});
-	}
+    });
+		this.setState({
+      movies: [...this.state.movies, ...movieData.data.data.results],
+      loading: false,
+      loadMore: false
+    });
+  }
+
+  recallGetMovies() {
+    this.getMovies(this.state.page + 1, false, true);
+    this.setState({page: this.state.page + 1});
+  }
 
 	componentDidMount() {
 		this.getMovies();
-	}
+  }
+
 	render() {
 		const latestMovie = this.state.movies[0] || {};
 		return (
@@ -56,7 +68,7 @@ export default class Home extends Component {
                 <div className="credits-watchlist">
                   <div className="movie-credits">
                     <Text color="#fff" fontSize={25}>
-                      {new Date(latestMovie.release_date).getFullYear()}
+                      {latestMovie.release_date && new Date(latestMovie.release_date).getFullYear()}
                     </Text>
                   </div>
                   <div className="movie-watchlist">
@@ -86,6 +98,11 @@ export default class Home extends Component {
 									<MovieCard key={movie.id} movie={movie} />
 								))}
 							</div>
+              <div className="loadMore">
+                <button onClick={() => this.recallGetMovies()}>
+                  {this.state.loadMore ? 'Loading...' : 'Load More'}
+                </button>
+              </div>
 						</section>
 					</main>
 				) : null}

@@ -21,6 +21,7 @@ button {
   font-family: $primary-font;
   border-radius: 2px;
   padding: 10px;
+  cursor: pointer;
 }
 
 header {
@@ -239,6 +240,24 @@ main {
   }
 }
 
+.loadMore {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.dark_background {
+  .notFound {
+    p:first-child {
+      letter-spacing: 10px;
+      margin-bottom: 5px;
+    }
+
+    p:nth-child(2) {
+      letter-spacing: 3px;
+    }
+  }
+}
+
 .tag {
   display: inline;
   padding: 5px;
@@ -262,4 +281,5 @@ main {
   font-size: 22px;
 }
 
-@import "form"
+@import "form";
+@import "auth";

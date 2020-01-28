@@ -1,0 +1,53 @@
+.dark_background {
+  height: 100vh;
+  background: linear-gradient(0deg, rgba($black, 0.88), rgba($black, 0.88)),
+    url("../images/component.png");
+  background-size: cover;
+  * {
+    color: white;
+  }
+}
+.ui.checkbox input.hidden + label {
+  color: white;
+}
+
+.center {
+  text-align: center;
+}
+
+.center_items {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.auth__input{
+  background: inherit;
+  width: 72vmin;
+  height: 7vmin;
+  padding: 2vmin;
+  margin: 1vmin 0;
+  border: 1px solid #707070;
+  font-family: $primary-font;
+  transition: 0.2s all;
+
+  &:focus {
+    border-left: 3px solid $primary-color;
+  }
+}
+
+.remember {
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+  input[type=checkbox] {
+    margin-right: 10px;
+  }
+}
+
+.alt-sign {
+  margin-top: 10px;
+}
+
+.error-input {
+  border: 1px solid red;
+}
