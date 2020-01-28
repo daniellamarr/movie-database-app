@@ -6,59 +6,6 @@ import Tag from '../components/Tag';
 import CastCard from '../components/CastCard';
 import {apiServiceClient} from '../util/axios-client';
 
-const cast = [
-  {
-    title: 'Daniel Lamarr',
-    character: 'Lannister',
-    photo: 'https://images.pexels.com/photos/3008141/pexels-photo-3008141.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
-  },
-  {
-    title: 'Daniel Lamarr',
-    character: 'Lannister',
-    photo: 'https://images.pexels.com/photos/3008141/pexels-photo-3008141.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
-  },
-  {
-    title: 'Daniel Lamarr',
-    character: 'Lannister',
-    photo: 'https://images.pexels.com/photos/3008141/pexels-photo-3008141.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
-  },
-  {
-    title: 'Daniel Lamarr',
-    character: 'Lannister',
-    photo: 'https://images.pexels.com/photos/3008141/pexels-photo-3008141.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
-  },
-  {
-    title: 'Daniel Lamarr',
-    character: 'Lannister',
-    photo: 'https://images.pexels.com/photos/3008141/pexels-photo-3008141.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
-  },
-  {
-    title: 'Daniel Lamarr',
-    character: 'Lannister',
-    photo: 'https://images.pexels.com/photos/3008141/pexels-photo-3008141.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
-  },
-  {
-    title: 'Daniel Lamarr',
-    character: 'Lannister',
-    photo: 'https://images.pexels.com/photos/3008141/pexels-photo-3008141.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
-  },
-  {
-    title: 'Daniel Lamarr',
-    character: 'Lannister',
-    photo: 'https://images.pexels.com/photos/3008141/pexels-photo-3008141.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
-  },
-  {
-    title: 'Daniel Lamarr',
-    character: 'Lannister',
-    photo: 'https://images.pexels.com/photos/3008141/pexels-photo-3008141.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
-  },
-  {
-    title: 'Daniel Lamarr',
-    character: 'Lannister',
-    photo: 'https://images.pexels.com/photos/3008141/pexels-photo-3008141.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
-  },
-]
-
 export default class SingleMovie extends Component {
 	constructor(props) {
 		super(props);
@@ -76,7 +23,6 @@ export default class SingleMovie extends Component {
 			method: "get"
 		});
     this.setState({movie: movieData.data.data, loading: false});
-    console.log(movieData)
   }
 
   componentDidMount() {

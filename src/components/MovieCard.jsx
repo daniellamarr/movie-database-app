@@ -10,7 +10,7 @@ export default class MovieCard extends Component {
     return (
       <div className="movie-card" style={{backgroundImage: `url(${movie.poster_path})`}}>
         <div className="movie-card-title">
-          <Text fontSize={10} color="#fff">{movie.genres[0].name}</Text>
+          <Text fontSize={10} color="#fff">{movie.genres.length > 0 && movie.genres[0].name}</Text>
           <Link to={`/movies/${movie.id}`}>
             <Text fontSize={16} color="#fff">{movie.title}</Text>
           </Link>
