@@ -5,6 +5,7 @@ import Rating from '../components/Rating';
 import Tag from '../components/Tag';
 import CastCard from '../components/CastCard';
 import {apiServiceClient} from '../util/axios-client';
+import Reviews from '../components/Reviews';
 
 export default class SingleMovie extends Component {
 	constructor(props) {
@@ -88,6 +89,9 @@ export default class SingleMovie extends Component {
                 <CastCard cast={cast} />
               ))}
             </div>
+          </section>
+          <section id="movie-cast">
+            <Reviews/>
           </section>
         </main>
       </div>
