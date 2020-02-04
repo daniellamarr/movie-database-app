@@ -10,7 +10,7 @@ const CustomModal = (props) => {
             <ModalBody
                 content={
                     props.type == "AddReview" ?
-                        <AddReviewModal closeModal={() => { setOpenModal(false) }} />
+                        <AddReviewModal data={props.movieDetail} closeModal={() => { setOpenModal(false) }} />
                         :
                         ""
                 }

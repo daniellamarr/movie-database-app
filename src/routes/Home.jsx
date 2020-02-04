@@ -28,12 +28,11 @@ export default class Home extends Component {
 				page
 			}
 	});
-	
 		this.setState({
       movies: [...this.state.movies, ...movieData.data.data.results],
       loading: false,
       loadMore: false
-    }, ()=>{console.log(this.state.movies)});
+    });
   }
 
   recallGetMovies() {
