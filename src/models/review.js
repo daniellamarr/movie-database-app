@@ -5,7 +5,7 @@
  * @param  {Object} ModelParams.db - Database Connection Object
  * @returns {Object} SequelizeModel
  */
-export default ({ Sequelize, db }) => {
+export default ({Sequelize, db}) => {
   const Review = db.define('review', {
     id: {
       type: Sequelize.INTEGER,
