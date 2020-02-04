@@ -91,7 +91,7 @@ export default class SingleMovie extends Component {
             </div>
           </section>
           <section id="movie-cast">
-            <Reviews/>
+            <Reviews movieDetail={movie}/>
           </section>
         </main>
       </div>

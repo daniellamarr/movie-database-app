@@ -1,28 +1,46 @@
-import React from 'react';
-import dummyImage from '../assets/images/component.png'
-import likeIcon from '../assets/images/Icon awesome-thumbs-up.svg'
+import React,{useState,useEffect} from 'react';
+import dummyImage from '../assets/images/component.png';
+import likeIcon from '../assets/images/Icon awesome-thumbs-up.svg';
 import Tag from '../components/Tag';
 import Rating from '../components/Rating';
 import CustomModal from './customModal';
 
 
 
-const Reviews = () => {
+const Reviews = (props) => {
+    const [movie, setMovie] = useState({});
+    const [toRender, setToRender] = useState(false);
+    useEffect(()=>{
+        setMovie({...movie, ...props.movieDetail});
+        checkForData(props.movieDetail)        
+    },[props.movieDetail]);
+
+    const checkForData = (value) =>{
+        var data = Object.values(value).length
+        if(data !== 0){
+            setToRender(true);
+        }else{
+            // set Loader here
+        }
+    }
     return (
         <div className={"review__wrapper"}>
-            <div className={"mb-5"}>
+            {
+                toRender ? 
+                <>
+                <div className={"mb-5"}>
                 <div className={"d-flex justify-content-between w-100 mb-4 review__top__col"}>
                     <span className={"review_text"}>
                         Reviews
                     </span>
-                    <CustomModal type="AddReview" content={<Tag>write a review</Tag>} />
+                    <CustomModal movieDetail={movie} type="AddReview" content={<Tag>write a review</Tag>} />
                 </div>
             </div>
 
             <div className={"row mb-5"}>
                 <div className={"col-md-3 d-flex align-items-center"}>
                     <div className={"rate__count"}>
-                        4.8
+                        {movie.vote_average}
                     </div>
                 </div>
                 <div className={"rate__progress__bar col-md-9"}>
@@ -115,6 +133,12 @@ const Reviews = () => {
                     <button>Read all Reviews</button>
                 </div>
             </div>
+                </>
+                :
+                <div>
+
+                </div>
+            }
         </div>
     )
 }
