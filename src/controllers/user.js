@@ -1,5 +1,5 @@
-import { trimUser } from '../util/user';
-import { movieDbServiceClient } from '../util/api';
+import {trimUser} from '../util/user';
+import {movieDbServiceClient} from '../util/api';
 
 /**
  * User Controller Initialization Function
@@ -7,14 +7,14 @@ import { movieDbServiceClient } from '../util/api';
  * @param {Object} ControllerParams.userModel - Sequelize User Model
  * @returns {Object} Controller Object
  */
-export default ({ userModel }) => {
+export default ({userModel}) => {
   const addToWatchlist = async (req, res, next) => {
     try {
-      const user = await userModel.findOne({ where: { email: req.user.email } });
+      const user = await userModel.findOne({where: {email: req.user.email}});
 
       if (!user) {
         const userNotFoundError = new Error(
-          `User with email - ${req.user.email} Not Found`,
+          `User with email - ${req.user.email} Not Found`
         );
         userNotFoundError.statusCode = 404;
         throw userNotFoundError;
@@ -28,7 +28,7 @@ export default ({ userModel }) => {
       } catch (error) {
         if (error?.response?.data?.status_message.includes('could not be found')) {
           const movieNotFoundError = new Error(
-            "A movie with that ID can't be found",
+            "A movie with that ID can't be found"
           );
           movieNotFoundError.statusCode = 404;
           throw movieNotFoundError;
@@ -56,11 +56,11 @@ export default ({ userModel }) => {
 
   const removeFromWatchlist = async (req, res, next) => {
     try {
-      const user = await userModel.findOne({ where: { email: req.user.email } });
+      const user = await userModel.findOne({where: {email: req.user.email}});
 
       if (!user) {
         const userNotFoundError = new Error(
-          `User with email - ${req.user.email} Not Found`,
+          `User with email - ${req.user.email} Not Found`
         );
         userNotFoundError.statusCode = 404;
         throw userNotFoundError;
@@ -74,7 +74,7 @@ export default ({ userModel }) => {
       } catch (error) {
         if (error?.response?.data?.status_message.includes('could not be found')) {
           const movieNotFoundError = new Error(
-            "A movie with that ID can't be found",
+            "A movie with that ID can't be found"
           );
           movieNotFoundError.statusCode = 404;
           throw movieNotFoundError;
@@ -84,7 +84,9 @@ export default ({ userModel }) => {
       }
 
       const updatedUser = await user.update({
-        watchlist: user.dataValues.watchlist.filter((movieId) => movieId !== req.body.movieId),
+        watchlist: user.dataValues.watchlist.filter(
+          movieId => movieId !== req.body.movieId
+        ),
       });
 
       const trimmedUser = trimUser(updatedUser);
@@ -99,5 +101,5 @@ export default ({ userModel }) => {
       return next(error);
     }
   };
-  return { addToWatchlist, removeFromWatchlist };
+  return {addToWatchlist, removeFromWatchlist};
 };

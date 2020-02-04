@@ -11,16 +11,9 @@ import AuthController from '../controllers/auth';
  * @param  {Object} RouterParams.validator - Custom Validator
  * @returns {Object} ExpressRouter
  */
-export default ({
-  express,
-  jwt,
-  bcrypt,
-  userModel,
-  expressValidator,
-  validator,
-}) => {
+export default ({express, jwt, bcrypt, userModel, expressValidator, validator}) => {
   const authRouter = express.Router();
-  const authController = AuthController({ jwt, bcrypt, userModel });
+  const authController = AuthController({jwt, bcrypt, userModel});
 
   authRouter.post(
     '/signup',
@@ -37,11 +30,11 @@ export default ({
         }),
       expressValidator('password')
         .trim()
-        .isLength({ min: 7 })
+        .isLength({min: 7})
         .withMessage('Password should be 7 characters and above'),
     ],
     validator,
-    authController.signup,
+    authController.signup
   );
 
   authRouter.post(
@@ -56,11 +49,11 @@ export default ({
         }),
       expressValidator('password')
         .trim()
-        .isLength({ min: 7 })
+        .isLength({min: 7})
         .withMessage('Password should be 7 characters and above'),
     ],
     validator,
-    authController.login,
+    authController.login
   );
 
   return authRouter;

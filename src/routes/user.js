@@ -11,12 +11,10 @@ import AuthMiddleware from '../middlewares/auth';
  * @param  {Object} RouterParams.validator - Custom Validator
  * @returns {Object} ExpressRouter
  */
-export default ({
-  express, jwt, userModel, expressValidator, validator,
-}) => {
+export default ({express, jwt, userModel, expressValidator, validator}) => {
   const userRouter = express.Router();
-  const authMiddleware = AuthMiddleware({ jwt });
-  const userController = UserController({ userModel });
+  const authMiddleware = AuthMiddleware({jwt});
+  const userController = UserController({userModel});
 
   userRouter.post(
     '/watchlist/add',
@@ -28,7 +26,7 @@ export default ({
         .withMessage('Movie ID is required'),
     ],
     validator,
-    userController.addToWatchlist,
+    userController.addToWatchlist
   );
 
   userRouter.post(
@@ -41,7 +39,7 @@ export default ({
         .withMessage('Movie ID is required'),
     ],
     validator,
-    userController.removeFromWatchlist,
+    userController.removeFromWatchlist
   );
 
   return userRouter;

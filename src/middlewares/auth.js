@@ -4,7 +4,7 @@
  * @param  {Object} MiddlewareParams.jwt - JsonWebToken
  * @returns {Object} AuthMiddleware
  */
-export default ({ jwt }) => {
+export default ({jwt}) => {
   const verifyToken = async (req, res, next) => {
     try {
       let token = req.headers['x-access-token'] || req.headers.authorization;
@@ -32,5 +32,5 @@ export default ({ jwt }) => {
     }
   };
 
-  return { verifyToken };
+  return {verifyToken};
 };

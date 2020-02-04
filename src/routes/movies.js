@@ -13,11 +13,16 @@ import AuthMiddleware from '../middlewares/auth';
  * @returns {Object} ExpressRouter
  */
 export default ({
-  express, jwt, expressValidator, validator, userModel, reviewModel,
+  express,
+  jwt,
+  expressValidator,
+  validator,
+  userModel,
+  reviewModel,
 }) => {
   const moviesRouter = express.Router();
-  const authMiddleware = AuthMiddleware({ jwt });
-  const moviesController = MoviesController({ userModel, reviewModel });
+  const authMiddleware = AuthMiddleware({jwt});
+  const moviesController = MoviesController({userModel, reviewModel});
 
   moviesRouter.get(
     '/',
@@ -28,7 +33,19 @@ export default ({
         .withMessage('Page No is Required'),
     ],
     validator,
-    moviesController.getLatestMovies,
+    moviesController.getLatestMovies
+  );
+
+  moviesRouter.get(
+    '/search',
+    [
+      expressValidator('query')
+        .trim()
+        .isString()
+        .withMessage('Search Query is required'),
+    ],
+    validator,
+    moviesController.searchForMovies
   );
 
   moviesRouter.get(
@@ -40,7 +57,7 @@ export default ({
         .withMessage('Movie ID is required'),
     ],
     validator,
-    moviesController.getSingleMovieDetails,
+    moviesController.getSingleMovieDetails
   );
 
   moviesRouter.post(
@@ -56,7 +73,7 @@ export default ({
         .isString(),
     ],
     validator,
-    moviesController.reviewMovie,
+    moviesController.reviewMovie
   );
 
   return moviesRouter;

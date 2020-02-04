@@ -6,7 +6,7 @@
  * @param {Object} ModelParams.Review - Initialized Review Model
  * @returns {Object} SequelizeModel
  */
-export default ({ Sequelize, db, Review }) => {
+export default ({Sequelize, db, Review}) => {
   const User = db.define('user', {
     id: {
       type: Sequelize.INTEGER,
@@ -33,6 +33,6 @@ export default ({ Sequelize, db, Review }) => {
     },
   });
 
-  User.hasMany(Review, { constraints: true, onDelete: 'CASCADE' });
+  User.hasMany(Review, {constraints: true, onDelete: 'CASCADE'});
   return User;
 };

@@ -1,5 +1,5 @@
 // Helper Methods
-export const trimUser = (user) => ({
+export const trimUser = user => ({
   id: user.dataValues.id,
   username: user.dataValues.username,
   email: user.dataValues.email,
