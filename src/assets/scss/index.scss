@@ -11,7 +11,7 @@ a {
 }
 
 input, button, textarea {
-  outline: none;
+  outline: none !important;
 }
 
 button {
@@ -166,7 +166,7 @@ main {
     }
 
     .movie-card-title {
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: rgba(134, 103, 103, 0.5);
       position: absolute;
       bottom: 0;
       padding: 10px;
@@ -279,6 +279,93 @@ main {
 
 .star.fa-star {
   font-size: 22px;
+}
+.progress{
+  background-color: inherit;
+}
+.progress-bar{
+  background-color: #FFFFFF;
+}
+.review__image__wrapper{
+  width: 11vmin;
+  height: 11vmin;
+  margin: auto;
+  img{
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    border-radius: 52px;
+  }
+}
+.add__review__modal__wrapper{
+  width: 50vw;
+}
+.rate__count{
+  // text-align: left;
+  // font: Medium 141px/169px Rajdhani;
+  font-size: 18vmin;
+  letter-spacing: 0;
+  color: #FFFFFF;
+  opacity: 1;
+  height: auto;
+}
+.review__top__col{
+  .review_text{
+    letter-spacing: 0;
+    color: #FFFFFF;
+    opacity: 1;
+  }
+}
+.review__section{
+  b{
+    letter-spacing: 0;
+    color: #FFFFFF;
+    opacity: 1;
+  }
+  p{
+    letter-spacing: 0;
+    color: #FFFFFF;
+    opacity: 1;
+  }
+}
+.add__review__modal__wrapper{
+  .top{
+    background-color: #CFB405;
+    height: 8vmin;
+    div{
+      letter-spacing: 0;
+      color: #FFFFFF;
+      opacity: 1;
+    }
+  }
+  p{
+    letter-spacing: 0;
+    color: #000000;
+    opacity: 1;
+  }
+  textarea{
+    height: 100%;
+    width: 100%;
+    background-color: #EBEBEB;
+    border: none;
+    padding: 10px;
+  }
+  img{
+    height: 18vmin;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+}
+.review_modal_img_wrapper{
+  width: 70%;
+}
+.review_movie_name{}
+.cancel__modal__btn{
+  border: 1px solid #979695;
+  border-radius: 3px;
+  opacity: 1;
+  color: #000000;
+  background-color: inherit;
 }
 
 @import "form";

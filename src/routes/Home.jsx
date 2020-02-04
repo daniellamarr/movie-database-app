@@ -5,6 +5,8 @@ import Rating from "../components/Rating";
 import Tag from "../components/Tag";
 import MovieCard from "../components/MovieCard";
 import {apiServiceClient} from "../util/axios-client";
+import { Link } from "react-router-dom";
+
 
 export default class Home extends Component {
 	constructor(props) {
@@ -25,7 +27,7 @@ export default class Home extends Component {
 			params: {
 				page
 			}
-    });
+	});
 		this.setState({
       movies: [...this.state.movies, ...movieData.data.data.results],
       loading: false,
