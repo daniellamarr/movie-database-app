@@ -37,6 +37,12 @@ export default ({express, expressValidator, validator}) => {
   );
 
   moviesRouter.get(
+    '/watchlist',
+    authMiddleware.verifyToken,
+    moviesController.getWatchlistMovies
+  );
+
+  moviesRouter.get(
     '/:id',
     [
       expressValidator('id')

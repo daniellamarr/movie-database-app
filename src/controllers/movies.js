@@ -57,6 +57,21 @@ export default () => {
     return {...movieObj, genres};
   };
 
+  const getMovieByID = async movieId => {
+    let movieData = (
+      await movieDbServiceClient({
+        url: `/movie/${movieId}`,
+        method: 'get',
+        params: {
+          append_to_response: 'credits',
+        },
+      })
+    ).data;
+
+    movieData = addFullImagePath(movieData);
+    return movieData;
+  };
+
   // Controller Methods
   const getLatestMovies = async (req, res, next) => {
     try {
@@ -99,15 +114,7 @@ export default () => {
       const {id} = req.params;
       let movieData;
       try {
-        movieData = (
-          await movieDbServiceClient({
-            url: `/movie/${id}`,
-            method: 'get',
-            params: {
-              append_to_response: 'credits',
-            },
-          })
-        ).data;
+        movieData = await getMovieByID(id);
       } catch (error) {
         if (error.response.data.status_message.includes('could not be found')) {
           const movieNotFoundError = new Error(
@@ -120,7 +127,6 @@ export default () => {
         }
       }
 
-      movieData = addFullImagePath(movieData);
       return res.status(200).json({
         status: 'success',
         message: 'Fetched Movie Details',
@@ -179,9 +185,38 @@ export default () => {
     }
   };
 
+  const getWatchlistMovies = async (req, res, next) => {
+    try {
+      const user = await userModel.findOne({where: {email: req.user.email}});
+
+      if (!user) {
+        const userNotFoundError = new Error(
+          `User with email - ${req.user.email} Not Found`
+        );
+        userNotFoundError.statusCode = 404;
+        throw userNotFoundError;
+      }
+      const watchlist = [];
+      for await (const movieID of user.dataValues.watchlist) {
+        const result = await getMovieByID(movieID);
+        watchlist.push(result);
+      }
+
+      return res.status(200).json({
+        status: 'success',
+        message: 'Watchlist Retrieved',
+        data: watchlist,
+      });
+    } catch (error) {
+      if (!error.statusCode) error.statusCode = 500;
+      return next(error);
+    }
+  };
+
   return {
     getLatestMovies,
     getSingleMovieDetails,
     searchForMovies,
+    getWatchlistMovies,
   };
 };
