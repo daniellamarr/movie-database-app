@@ -16,6 +16,7 @@ import ReviewModel from './models/review';
 import MoviesRouter from './routes/movies';
 import AuthRouter from './routes/auth';
 import UserRouter from './routes/user';
+import ReviewRouter from './routes/reviews';
 
 // Helper Functions
 import initializeDatabase from './util/db';
@@ -91,11 +92,8 @@ app.use(
   `${URL_PREFIX}/movies`,
   MoviesRouter({
     express,
-    jwt,
     expressValidator: check,
     validator,
-    userModel,
-    reviewModel,
   })
 );
 
@@ -107,6 +105,18 @@ app.use(
     userModel,
     expressValidator: check,
     validator,
+  })
+);
+
+app.use(
+  `${URL_PREFIX}/review`,
+  ReviewRouter({
+    express,
+    jwt,
+    expressValidator: check,
+    validator,
+    userModel,
+    reviewModel,
   })
 );
 
