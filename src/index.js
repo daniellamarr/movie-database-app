@@ -94,6 +94,8 @@ app.use(
     express,
     expressValidator: check,
     validator,
+    jwt,
+    userModel,
   })
 );
 

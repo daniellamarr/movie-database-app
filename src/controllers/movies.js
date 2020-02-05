@@ -2,9 +2,11 @@ import {movieDbServiceClient} from '../util/api';
 
 /**
  * Movies Controller Initialization Function
+ * @param {Object} ControllerParams - Controller Parameters
+ * @param {Object} ControllerParams.userModel - Initialized User Model
  * @returns {Object} Controller Object
  */
-export default () => {
+export default ({userModel}) => {
   // Helper Methods
   const sortMovies = movieList =>
     movieList.sort((movieA, movieB) => {
