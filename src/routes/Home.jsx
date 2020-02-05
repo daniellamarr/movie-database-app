@@ -6,6 +6,7 @@ import Tag from "../components/Tag";
 import MovieCard from "../components/MovieCard";
 import {apiServiceClient} from "../util/axios-client";
 import { Link } from "react-router-dom";
+import Loader from "../components/Loader";
 
 
 export default class Home extends Component {
@@ -107,7 +108,7 @@ export default class Home extends Component {
               </div>
 						</section>
 					</main>
-				) : null}
+				) : <div className="fixed-loader"><Loader /><p>Fetching Movies</p></div>}
 			</div>
 		);
 	}

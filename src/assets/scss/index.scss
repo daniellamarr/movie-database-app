@@ -372,5 +372,10 @@ main {
   display: none;
 }
 
+.fixed-loader {
+  padding-top: 200px;
+  text-align: center;
+}
+
 @import "form";
 @import "auth";
