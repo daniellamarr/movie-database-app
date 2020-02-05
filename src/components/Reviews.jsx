@@ -10,7 +10,6 @@ import CustomModal from './customModal';
 const Reviews = (props) => {
     const [movie, setMovie] = useState({});
     const [toRender, setToRender] = useState(false);
-    console.log("review land", props.reviews)
     useEffect(() => {
         setMovie({ ...movie, ...props.movieDetail });
         checkForData(props.movieDetail)

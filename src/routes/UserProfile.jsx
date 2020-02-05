@@ -24,7 +24,6 @@ const UserProfile = () => {
                 setLoader(false)
                 // todo
                 setWatchList(res.data.data)
-                console.log(res.data.data)
             }
         }).catch((err)=>{
             alert(err)
@@ -34,7 +33,6 @@ const UserProfile = () => {
     useEffect(()=>{
         fetchWatchlist()
     },[])
-    console.log("watchList",watchList)
     return (
         <div>
             <Header />

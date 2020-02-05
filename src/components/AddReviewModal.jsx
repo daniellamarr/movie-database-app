@@ -32,7 +32,6 @@ const AddReviewModal = (props) => {
             },
         }).then((res) => {
             if (res.data.status == "success") {
-                console.log("success", res.data.status)
                 props.closeModal()
                 setLoader(false)
             }

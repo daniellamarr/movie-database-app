@@ -17,7 +17,8 @@ export default class SingleMovie extends Component {
     this.state = {
       movie: {},
       loading: false,
-      review: []
+      review: [],
+      addedToWatchlist: false
     };
   }
 
@@ -30,36 +31,16 @@ export default class SingleMovie extends Component {
     });
     this.setState({ movie: movieData.data.data, loading: false });
   }
-  addToWatchList(movie) {
-    var userToke = localStorage.getItem("token")
-    const data = { movieId: movie }
-    Axios.post(`${API_ROOT}/user/watchlist/add`, data, {
-      headers: {
-        'x-access-token': `moviedb${userToke}`,
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
-      if (res.data.status == "success") {
-        alert(res.data.message)
-      }
-    }).catch((err) => {
-      alert(err)
-    })
-  }
   // TODO
   getReviews() {
-    const { movieId } = this.props.match.params
-    var userToke = localStorage.getItem("token")
-    var data = { movieId: movieId }
+    const { movieId } = this.props.match.params;
     Axios.get(`${API_ROOT}/review?movieId=${movieId}`, {
       headers: {
         "Content-Type": "application/json",
       },
     }).then((res) => {
       this.setState({review: res.data.data})
-      console.log("ressss", res)
       if (res.data.status === "success") {
-        console.log("review", res.data)
       }
     }).catch((err) => {
     })
@@ -74,14 +55,46 @@ export default class SingleMovie extends Component {
             },
         }).then((res) => {
             if (res.data.status == "success") {
-				alert(res.data.message)
+              alert(res.data.message)
+              const userData = JSON.parse(localStorage.getItem('userData'));
+              userData.watchlist = res.data.data.watchlist;
+              localStorage.setItem('userData', JSON.stringify(userData));
+              this.checkWatchList(movie);
             }
         }).catch((err)=>{
             alert(err)
         })
-	}
+  }
+
+  removeFromWatchList (movie){
+		var userToke = localStorage.getItem("token")
+		var data = {movieId:movie}
+		Axios.post(`${API_ROOT}/user/watchlist/remove`, data, {
+            headers: {
+                'x-access-token': `moviedb${userToke}`,
+                "Content-Type": "application/json",
+            },
+        }).then((res) => {
+            if (res.data.status == "success") {
+              alert(res.data.message)
+              const userData = JSON.parse(localStorage.getItem('userData'));
+              userData.watchlist = res.data.data.watchlist;
+              localStorage.setItem('userData', JSON.stringify(userData));
+              this.checkWatchList(movie);
+            }
+        }).catch((err)=>{
+            alert(err)
+        })
+  }
+  
+  checkWatchList() {
+    const { movieId } = this.props.match.params;
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    return this.setState({ addedToWatchlist: userData.watchlist.includes(Number(movieId)) });
+  }
 
   componentDidMount() {
+    this.checkWatchList();
     this.getReviews();
     this.getSingleMovie();
   }
@@ -116,9 +129,14 @@ export default class SingleMovie extends Component {
                   </Text>
                 </div>
                 <div className="movie-watchlist">
+                  {this.state.addedToWatchlist ?
+                  <button onClick={() => { this.removeFromWatchList(movie.id) }}>
+                    Remove from watchlist
+                  </button>
+                  :
                   <button onClick={() => { this.addToWatchList(movie.id) }}>
                     Add to watchlist
-                  </button>
+                  </button>}
                 </div>
               </div>
               <div className="tags">

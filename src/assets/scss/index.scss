@@ -21,7 +21,7 @@ button {
   font-family: $primary-font;
   border-radius: 2px;
   padding: 10px;
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 header {
@@ -99,14 +99,14 @@ main {
 
       .movie-credits {
         margin-top: 20px;
-        width: 90%;
+        width: 85%;
       }
 
       .movie-watchlist {
         margin-top: auto;
 
         button {
-          width: 150px;
+          width: 200px;
         }
       }
     }

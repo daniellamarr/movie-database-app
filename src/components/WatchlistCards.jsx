@@ -7,7 +7,6 @@ import dummyImage from '../assets/images/primary-bg.jpg'
 export default class WatchlistCard extends Component {
   constructor(props){
     super(props)
-    console.log("wewr", this.props.data.genres)
   }
 
   render() {
