@@ -368,5 +368,9 @@ main {
   background-color: inherit;
 }
 
+.hide {
+  display: none;
+}
+
 @import "form";
 @import "auth";

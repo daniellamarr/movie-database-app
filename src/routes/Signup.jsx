@@ -3,6 +3,7 @@ import { Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import {apiServiceClient} from '../util/axios-client';
 import Header from "../components/Header";
+import { validateEmail } from "../util/validation";
 
 
 const Signup = (props) => {
@@ -24,13 +25,23 @@ const Signup = (props) => {
     return fields.map(field => {
       if(!state[field]) {
         document.getElementById(field).classList.add('error-input');
+        document.getElementById(`${field}_error`).classList.remove('hide');
+        document.getElementById(`${field}_error`).innerHTML = `${field} is required`;
         return false;
       } else {
-        if (field === 'password' && state['password'].length < 4) {
+        if (field === 'password' && state['password'].length < 7) {
           document.getElementById('password').classList.add('error-input');
+          document.getElementById('password_error').classList.remove('hide');
+          document.getElementById('password_error').innerHTML = 'password cannot be less than 7';
+          return false;
+        } else if (!validateEmail(state['email'])) {
+          document.getElementById('email').classList.add('error-input');
+          document.getElementById('email_error').classList.remove('hide');
+          document.getElementById('email_error').innerHTML = 'email format is invalid';
           return false;
         }
         document.getElementById(field).classList.remove('error-input');
+        document.getElementById(`${field}_error`).classList.add('hide');
         return true;
       }
     })
@@ -38,6 +49,8 @@ const Signup = (props) => {
 
   const handleSubmit = async (e) => {
     try {
+      document.getElementById('auth_error').classList.add('hide');
+
       if (handleError(['username', 'email', 'password']).includes(false)) {
         return false;
       }
@@ -64,6 +77,8 @@ const Signup = (props) => {
         props.history.push("/")
       }
     } catch(err) {
+      document.getElementById('auth_error').classList.remove('hide');
+      document.getElementById('auth_error').innerHTML = 'we are not able to sign you up at this time';
       setLoading(false);
     }
   }
@@ -74,13 +89,19 @@ const Signup = (props) => {
       <div className="dark_background" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
         <div>
           <div>
+            <span id="auth_error" className="hide error-div"></span>
+          </div>
+          <div>
             <input className="auth__input" type='text' id="username" onChange={handleChange} placeholder="Name" />
+            <span id="username_error" className="hide error-span"></span>
           </div>
           <div>
             <input className="auth__input" type='email' id="email" onChange={handleChange} placeholder="Email" />
+            <span id="email_error" className="hide error-span"></span>
           </div>
           <div>
             <input className="auth__input" type="password" id="password" placeholder="Password" onChange={handleChange} />
+            <span id="password_error" className="hide error-span"></span>
           </div>
           <div className="remember">
             <input type="checkbox" />
