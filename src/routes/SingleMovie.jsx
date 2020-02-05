@@ -6,6 +6,7 @@ import Tag from '../components/Tag';
 import CastCard from '../components/CastCard';
 import {apiServiceClient} from '../util/axios-client';
 import Reviews from '../components/Reviews';
+import Loader from '../components/Loader';
 
 export default class SingleMovie extends Component {
 	constructor(props) {
@@ -36,64 +37,66 @@ export default class SingleMovie extends Component {
     return (
       <div>
         <Header />
-        <main id="landing">
-          <section id="primary-movie"
-            style={{backgroundImage: `url(${movie.backdrop_path})`}}>
-            <div className="primary-movie-details">
-              <div className="movie-title">
-                <Text color="#fff" fontSize={40}>
-                  {this.state.movie.title}
-                </Text>
-              </div>
-              <div className="movie-reviews">
-                <div className="rating">
-                  <Rating noOfStars={rating} checkType="checked" />
-                </div>
-                <div className="runtime">
-                  <Text color="#fff" fontSize={16}>{movie.runtime} mins</Text>
-                </div>
-              </div>
-              <div className="credits-watchlist">
-                <div className="movie-credits">
-                  <Text color="#fff" fontSize={25}>
-                    {new Date(movie.release_date).getFullYear()}
+        {!this.state.loading ? (
+          <main id="landing">
+            <section id="primary-movie"
+              style={{backgroundImage: `url(${movie.backdrop_path})`}}>
+              <div className="primary-movie-details">
+                <div className="movie-title">
+                  <Text color="#fff" fontSize={40}>
+                    {this.state.movie.title}
                   </Text>
                 </div>
-                <div className="movie-watchlist">
-                  <button>
-                    Add to watchlist
-                  </button>
+                <div className="movie-reviews">
+                  <div className="rating">
+                    <Rating noOfStars={rating} checkType="checked" />
+                  </div>
+                  <div className="runtime">
+                    <Text color="#fff" fontSize={16}>{movie.runtime} mins</Text>
+                  </div>
+                </div>
+                <div className="credits-watchlist">
+                  <div className="movie-credits">
+                    <Text color="#fff" fontSize={25}>
+                      {new Date(movie.release_date).getFullYear()}
+                    </Text>
+                  </div>
+                  <div className="movie-watchlist">
+                    <button>
+                      Add to watchlist
+                    </button>
+                  </div>
+                </div>
+                <div className="tags">
+                  {movie.genres &&
+                    movie.genres.map(genre => (
+                      <Tag key={genre.id}>{genre.name}</Tag>
+                    ))}
+                </div>
+                <div className="plot">
+                  <Text color="#fff" fontSize={20}>Overview</Text>
+                  <Text color="#fff">
+                    {movie.overview}
+                  </Text>
                 </div>
               </div>
-              <div className="tags">
-                {movie.genres &&
-                  movie.genres.map(genre => (
-                    <Tag key={genre.id}>{genre.name}</Tag>
-                  ))}
+              <div className="movie-photo" style={{backgroundImage: `url(${movie.poster_path})`}}></div>
+            </section>
+            <section id="movie-cast">
+              <div className="cast-title">
+                <Text color="#fff">Cast</Text>
               </div>
-              <div className="plot">
-                <Text color="#fff" fontSize={20}>Overview</Text>
-                <Text color="#fff">
-                  {movie.overview}
-                </Text>
+              <div className="casts">
+                {movie.credits && movie.credits.cast.map(cast => (
+                  <CastCard cast={cast} />
+                ))}
               </div>
-            </div>
-            <div className="movie-photo" style={{backgroundImage: `url(${movie.poster_path})`}}></div>
-          </section>
-          <section id="movie-cast">
-            <div className="cast-title">
-              <Text color="#fff">Cast</Text>
-            </div>
-            <div className="casts">
-              {movie.credits && movie.credits.cast.map(cast => (
-                <CastCard cast={cast} />
-              ))}
-            </div>
-          </section>
-          <section id="movie-cast">
-            <Reviews movieDetail={movie}/>
-          </section>
-        </main>
+            </section>
+            <section id="movie-cast">
+              <Reviews movieDetail={movie}/>
+            </section>
+          </main>
+        ) : <div className="fixed-loader"><Loader /><p>Fetching Movies</p></div>}
       </div>
     )
   }
