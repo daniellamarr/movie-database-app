@@ -59,6 +59,22 @@ export default class SingleMovie extends Component {
     }).catch((err) => {
     })
   }
+  addToWatchList (movie){
+		var userToke = localStorage.getItem("token")
+		var data = {movieId:movie}
+		Axios.post(`${API_ROOT}/user/watchlist/add`, data, {
+            headers: {
+                'x-access-token': `moviedb${userToke}`,
+                "Content-Type": "application/json",
+            },
+        }).then((res) => {
+            if (res.data.status == "success") {
+				alert(res.data.message)
+            }
+        }).catch((err)=>{
+            alert(err)
+        })
+	}
 
   componentDidMount() {
     this.getReviews();
