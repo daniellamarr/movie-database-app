@@ -32,7 +32,7 @@ export default class Header extends Component {
               </li>
               :
               <li>
-                <Link to="/signup">
+                <Link to="/userprofile">
                   {localStorage.getItem('userName')}
                 </Link>
               </li>
