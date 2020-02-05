@@ -10,6 +10,7 @@ import CustomModal from './customModal';
 const Reviews = (props) => {
     const [movie, setMovie] = useState({});
     const [toRender, setToRender] = useState(false);
+    console.log("review land", props.reviews)
     useEffect(() => {
         setMovie({ ...movie, ...props.movieDetail });
         checkForData(props.movieDetail)
@@ -66,7 +67,38 @@ const Reviews = (props) => {
                                 </div>
                             </div>
                         </div>
-                        <div className={"row w-100 mb-4"}>
+                        {props.reviews.length > 0 && props.reviews.map(r=>{
+                            return(
+                                <div className={"row w-100 mb-4"}>
+                            <div className={"col-md-2 mb-3"}>
+                                <div className={"review__image__wrapper"}>
+                                    <img src={dummyImage} width="100%" height="100%" />
+                                </div>
+                            </div>
+                            <div className={"col-md-10 review__section"}>
+                                <div className={"w-100 d-flex justify-content-between"}>
+                                    <div>
+                                        <div className={"mb-2"}>
+                                            <div className={"mb-2"}>
+                                                <b>Daniel Lamar</b>
+                                            </div>
+                                            <Rating noOfStars={3} checkType="checked" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <img src={likeIcon} alt="like" />
+                                    </div>
+                                </div>
+                                <div className={"w-100"}>
+                                    <p>{r.content}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                            )
+                        })}
+                        
+                        {/* <div className={"row w-100 mb-4"}>
                             <div className={"col-md-2 mb-3"}>
                                 <div className={"review__image__wrapper"}>
                                     <img src={dummyImage} width="100%" height="100%" />
@@ -96,43 +128,12 @@ const Reviews = (props) => {
                                     </p>
                                 </div>
                             </div>
-                        </div>
-                        <div className={"row w-100 mb-4"}>
-                            <div className={"col-md-2 mb-3"}>
-                                <div className={"review__image__wrapper"}>
-                                    <img src={dummyImage} width="100%" height="100%" />
-                                </div>
-                            </div>
-                            <div className={"col-md-10 review__section"}>
-                                <div className={"w-100 d-flex justify-content-between"}>
-                                    <div>
-                                        <div className={"mb-2"}>
-                                            <div className={"mb-2"}>
-                                                <b>Daniel Lamar</b>
-                                            </div>
-                                            <Rating noOfStars={3} checkType="checked" />
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <img src={likeIcon} alt="like" />
-                                    </div>
-                                </div>
-                                <div className={"w-100"}>
-                                    <p>After reviewing your job description and requirements as a frontend developer, i am certain that i have the necessary
-                                        skills to successfully do the job adeptly and perform.I am a very good team player and also hard-working. Over the
-                                        course of my 2yrs experience, i have worked with teams of developers and designers in implementing software solutions
-                                        using ReactJs, HTML, CSS, Jquery, Bootstrap and also engage in design thinking, design sprint. I am technical, and i love
-                                        good challenges. Overall i have consistently demonstrated teamwork, multitasking ability,
-                                        technical and good interpersonal skill in the every aspect of my role as a Front End software developer.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className={"row"}>
+                        </div> */}
+                       {props.reviews.length === 0 ?<></>:<div className={"row"}>
                             <div className={"col-md-12 d-flex justify-content-center"}>
                                 <button>Read all Reviews</button>
                             </div>
-                        </div>
+                        </div>} 
                     </>
                     :
                     <div>

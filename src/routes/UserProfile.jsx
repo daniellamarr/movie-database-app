@@ -22,6 +22,8 @@ const UserProfile = () => {
         }).then((res) => {
             if (res.data.status == "success" && res.data.data) {
                 setLoader(false)
+                // todo
+                setWatchList(res.data.data)
                 console.log(res.data.data)
             }
         }).catch((err)=>{
@@ -32,6 +34,7 @@ const UserProfile = () => {
     useEffect(()=>{
         fetchWatchlist()
     },[])
+    console.log("watchList",watchList)
     return (
         <div>
             <Header />
@@ -72,15 +75,15 @@ const UserProfile = () => {
                                 </div>
                             </div>
                             <div className={"row w-100"}>
-                                {/* {watchList.map((movie, i)=>{
-                                    <div className="col-md-4 movies p-2">
+                                {watchList !== null && watchList.map((movie, i)=>{
+                                  return(  <div className="col-md-4 movies p-2">
                                     <section id="latest-movies" className="p-0 m-0">
                                         <div className="movies w-100">
                                             <WatchlistCard data={movie} index={i}/>
                                         </div>
                                     </section>
-                                </div>
-                                })} */}
+                                </div>)
+                                })}
                             </div>
                         </div>
                     </div>

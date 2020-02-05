@@ -16,7 +16,8 @@ export default class SingleMovie extends Component {
     super(props);
     this.state = {
       movie: {},
-      loading: false
+      loading: false,
+      review: []
     };
   }
 
@@ -45,6 +46,7 @@ export default class SingleMovie extends Component {
       alert(err)
     })
   }
+  // TODO
   getReviews() {
     const { movieId } = this.props.match.params
     var userToke = localStorage.getItem("token")
@@ -54,7 +56,10 @@ export default class SingleMovie extends Component {
         "Content-Type": "application/json",
       },
     }).then((res) => {
-      if (res.data.status == "success") {
+      this.setState({review: res.data.data})
+      console.log("ressss", res)
+      if (res.data.status === "success") {
+        console.log("review", res.data)
       }
     }).catch((err) => {
     })
@@ -142,7 +147,7 @@ export default class SingleMovie extends Component {
             </div>
           </section>
           <section id="movie-cast">
-            <Reviews movieDetail={movie} />
+            <Reviews movieDetail={movie} reviews={this.state.review} />
           </section>
         </main>
       </div>
