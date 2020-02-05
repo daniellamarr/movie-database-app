@@ -1,4 +1,5 @@
 import MoviesController from '../controllers/movies';
+import AuthMiddleware from '../middlewares/auth';
 
 /**
  * Movies Router Initialization Function
@@ -6,11 +7,14 @@ import MoviesController from '../controllers/movies';
  * @param  {Object} RouterParams.express - Express
  * @param {Object} RouterParams.expressValidator - Express Validator
  * @param {Object} RouterParams.validator - Custom Validator
+ * @param {Object} RouterParams.jwt - Jsonwebtoken
+ * @param {Object} RouterParams.userModel - Initialized User Model
  * @returns {Object} ExpressRouter
  */
-export default ({express, expressValidator, validator}) => {
+export default ({express, expressValidator, validator, jwt, userModel}) => {
   const moviesRouter = express.Router();
-  const moviesController = MoviesController();
+  const authMiddleware = AuthMiddleware({jwt});
+  const moviesController = MoviesController({userModel});
 
   moviesRouter.get(
     '/',
