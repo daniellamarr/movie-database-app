@@ -16,6 +16,7 @@ const AddReviewModal = (props) => {
         var user = localStorage.getItem("token");
         setUsername(localStorage.getItem("userName"))
     },[]);
+
     const handleChange = (e) => {
         e.preventDefault()
         setReview({ ...review, [e.target.id]: e.target.value, movieId: data.id })
@@ -24,7 +25,7 @@ const AddReviewModal = (props) => {
         var userToke = localStorage.getItem("token")
         e.preventDefault()
         setLoader(true)
-        Axios.post(`${API_ROOT}/movies/review`, review, {
+        Axios.post(`${API_ROOT}/review`, review, {
             headers: {
                 'x-access-token': `moviedb${userToke}`,
                 "Content-Type": "application/json",

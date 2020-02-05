@@ -1,15 +1,47 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import Header from '../components/Header';
 import dummyimage from '../assets/images/primary-bg.jpg';
 import WatchlistCard from '../components/WatchlistCards';
+import Axios from 'axios';
+
+const { API_ROOT } = process.env;
+
 
 const UserProfile = () => {
+    const [watchList, setWatchList] = useState(null)
+    const [loader, setLoader] = useState(false)
+
+    const fetchWatchlist = () =>{
+        setLoader(true)
+        var userToke = localStorage.getItem("token")
+        Axios.get(`${API_ROOT}/movies/watchlist`, {
+            headers: {
+                'x-access-token': `moviedb${userToke}`,
+                "Content-Type": "application/json",
+            },
+        }).then((res) => {
+            if (res.data.status == "success" && res.data.data) {
+                setLoader(false)
+                console.log(res.data.data)
+            }
+        }).catch((err)=>{
+            alert(err)
+            setLoader(false)
+        })
+    }
+    useEffect(()=>{
+        fetchWatchlist()
+    },[])
     return (
         <div>
             <Header />
             <main id="landing">
                 <div className={"container"} style={{ paddingTop: "11vmin" }}>
-                    <div className="row w-100">
+                    {
+                        loader ? 
+                        <div>Loading...</div>
+                        :
+                        <div className="row w-100">
                         <div className={"col-md-4 "}>
                             <div className={"card border-0 position-sticky sticky-top w-75 mx-auto"} style={{top:"9vmin"}}>
                                 <div className={"d-flex justify-content-center align-items-center p-2"} style={{ background: "#262626" }}>
@@ -40,93 +72,19 @@ const UserProfile = () => {
                                 </div>
                             </div>
                             <div className={"row w-100"}>
-                                <div className="col-md-4 movies p-2">
+                                {/* {watchList.map((movie, i)=>{
+                                    <div className="col-md-4 movies p-2">
                                     <section id="latest-movies" className="p-0 m-0">
                                         <div className="movies w-100">
-                                            <WatchlistCard/>
+                                            <WatchlistCard data={movie} index={i}/>
                                         </div>
                                     </section>
                                 </div>
-                                <div className="col-md-4 movies p-2">
-                                    <section id="latest-movies" className="p-0 m-0">
-                                        <div className="movies w-100">
-                                            <WatchlistCard/>
-                                        </div>
-                                    </section>
-                                </div>
-                                <div className="col-md-4 movies p-2">
-                                    <section id="latest-movies" className="p-0 m-0">
-                                        <div className="movies w-100">
-                                            <WatchlistCard/>
-                                        </div>
-                                    </section>
-                                </div>
-                                <div className="col-md-4 movies p-2">
-                                    <section id="latest-movies" className="p-0 m-0">
-                                        <div className="movies w-100">
-                                            <WatchlistCard/>
-                                        </div>
-                                    </section>
-                                </div>
-                                <div className="col-md-4 movies p-2">
-                                    <section id="latest-movies" className="p-0 m-0">
-                                        <div className="movies w-100">
-                                            <WatchlistCard/>
-                                        </div>
-                                    </section>
-                                </div>
-                                <div className="col-md-4 movies p-2">
-                                    <section id="latest-movies" className="p-0 m-0">
-                                        <div className="movies w-100">
-                                            <WatchlistCard/>
-                                        </div>
-                                    </section>
-                                </div>
-                                <div className="col-md-4 movies p-2">
-                                    <section id="latest-movies" className="p-0 m-0">
-                                        <div className="movies w-100">
-                                            <WatchlistCard/>
-                                        </div>
-                                    </section>
-                                </div>
-                                <div className="col-md-4 movies p-2">
-                                    <section id="latest-movies" className="p-0 m-0">
-                                        <div className="movies w-100">
-                                            <WatchlistCard/>
-                                        </div>
-                                    </section>
-                                </div>
-                                <div className="col-md-4 movies p-2">
-                                    <section id="latest-movies" className="p-0 m-0">
-                                        <div className="movies w-100">
-                                            <WatchlistCard/>
-                                        </div>
-                                    </section>
-                                </div>
-                                <div className="col-md-4 movies p-2">
-                                    <section id="latest-movies" className="p-0 m-0">
-                                        <div className="movies w-100">
-                                            <WatchlistCard/>
-                                        </div>
-                                    </section>
-                                </div>
-                                <div className="col-md-4 movies p-2">
-                                    <section id="latest-movies" className="p-0 m-0">
-                                        <div className="movies w-100">
-                                            <WatchlistCard/>
-                                        </div>
-                                    </section>
-                                </div>
-                                <div className="col-md-4 movies p-2">
-                                    <section id="latest-movies" className="p-0 m-0">
-                                        <div className="movies w-100">
-                                            <WatchlistCard/>
-                                        </div>
-                                    </section>
-                                </div>
+                                })} */}
                             </div>
                         </div>
                     </div>
+                    }
                 </div>
             </main>
         </div>

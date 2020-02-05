@@ -4,7 +4,7 @@ import Text from '../components/Text';
 import Rating from '../components/Rating';
 import Tag from '../components/Tag';
 import CastCard from '../components/CastCard';
-import {apiServiceClient} from '../util/axios-client';
+import { apiServiceClient } from '../util/axios-client';
 import Reviews from '../components/Reviews';
 import Axios from 'axios';
 
@@ -12,53 +12,68 @@ const { API_ROOT } = process.env;
 
 
 export default class SingleMovie extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			movie: {},
-			loading: false
-		};
+  constructor(props) {
+    super(props);
+    this.state = {
+      movie: {},
+      loading: false
+    };
   }
 
   async getSingleMovie() {
     const { movieId } = this.props.match.params;
-		this.setState({loading: true});
-		const movieData = await apiServiceClient({
-			url: `/movies/${movieId}`,
-			method: "get"
-		});
-    this.setState({movie: movieData.data.data, loading: false});
+    this.setState({ loading: true });
+    const movieData = await apiServiceClient({
+      url: `/movies/${movieId}`,
+      method: "get"
+    });
+    this.setState({ movie: movieData.data.data, loading: false });
   }
-  addToWatchList (movie){
-		var userToke = localStorage.getItem("token")
-		var data = {movieId:movie}
-		Axios.post(`${API_ROOT}/user/watchlist/add`, data, {
-            headers: {
-                'x-access-token': `moviedb${userToke}`,
-                "Content-Type": "application/json",
-            },
-        }).then((res) => {
-            if (res.data.status == "success") {
-				alert(res.data.message)
-            }
-        }).catch((err)=>{
-            alert(err)
-        })
-	}
+  addToWatchList(movie) {
+    var userToke = localStorage.getItem("token")
+    const data = { movieId: movie }
+    Axios.post(`${API_ROOT}/user/watchlist/add`, data, {
+      headers: {
+        'x-access-token': `moviedb${userToke}`,
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.data.status == "success") {
+        alert(res.data.message)
+      }
+    }).catch((err) => {
+      alert(err)
+    })
+  }
+  getReviews() {
+    const { movieId } = this.props.match.params
+    var userToke = localStorage.getItem("token")
+    var data = { movieId: movieId }
+    Axios.get(`${API_ROOT}/review?movieId=${movieId}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.data.status == "success") {
+      }
+    }).catch((err) => {
+    })
+  }
 
   componentDidMount() {
+    this.getReviews();
     this.getSingleMovie();
   }
 
   render() {
-    const {movie} = this.state;
+    const { movie } = this.state;
     const rating = Math.floor((movie.vote_average / 10) * 5);
     return (
       <div>
         <Header />
         <main id="landing">
           <section id="primary-movie"
-            style={{backgroundImage: `url(${movie.backdrop_path})`}}>
+            style={{ backgroundImage: `url(${movie.backdrop_path})` }}>
             <div className="primary-movie-details">
               <div className="movie-title">
                 <Text color="#fff" fontSize={40}>
@@ -80,7 +95,7 @@ export default class SingleMovie extends Component {
                   </Text>
                 </div>
                 <div className="movie-watchlist">
-                  <button onClick={()=>{this.addToWatchList(movie.id)}}>
+                  <button onClick={() => { this.addToWatchList(movie.id) }}>
                     Add to watchlist
                   </button>
                 </div>
@@ -98,7 +113,7 @@ export default class SingleMovie extends Component {
                 </Text>
               </div>
             </div>
-            <div className="movie-photo" style={{backgroundImage: `url(${movie.poster_path})`}}></div>
+            <div className="movie-photo" style={{ backgroundImage: `url(${movie.poster_path})` }}></div>
           </section>
           <section id="movie-cast">
             <div className="cast-title">
@@ -111,7 +126,7 @@ export default class SingleMovie extends Component {
             </div>
           </section>
           <section id="movie-cast">
-            <Reviews movieDetail={movie}/>
+            <Reviews movieDetail={movie} />
           </section>
         </main>
       </div>
