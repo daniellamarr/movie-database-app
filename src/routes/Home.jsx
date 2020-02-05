@@ -6,6 +6,10 @@ import Tag from "../components/Tag";
 import MovieCard from "../components/MovieCard";
 import { apiServiceClient } from "../util/axios-client";
 import { Link } from "react-router-dom";
+import Axios from 'axios';
+
+const { API_ROOT } = process.env;
+
 
 
 export default class Home extends Component {
@@ -38,6 +42,22 @@ export default class Home extends Component {
 	recallGetMovies() {
 		this.getMovies(this.state.page + 1, false, true);
 		this.setState({ page: this.state.page + 1 });
+	}
+	addToWatchList (movie){
+		var userToke = localStorage.getItem("token")
+		var data = {movieId:movie}
+		Axios.post(`${API_ROOT}/user/watchlist/add`, data, {
+            headers: {
+                'x-access-token': `moviedb${userToke}`,
+                "Content-Type": "application/json",
+            },
+        }).then((res) => {
+            if (res.data.status == "success") {
+				alert(res.data.message)
+            }
+        }).catch((err)=>{
+            alert(err)
+        })
 	}
 
 	componentDidMount() {
@@ -74,7 +94,7 @@ export default class Home extends Component {
 										</Text>
 									</div>
 									<div className="movie-watchlist">
-										<button>
+										<button onClick={()=>{this.addToWatchList(latestMovie.id)}}>
 											Add to watchlist
                     					</button>
 									</div>
