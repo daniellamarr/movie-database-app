@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import dummyimage from '../assets/images/primary-bg.jpg';
 import WatchlistCard from '../components/WatchlistCards';
 import Axios from 'axios';
+import Loader from '../components/Loader';
 
 const { API_ROOT } = process.env;
 
@@ -36,6 +37,7 @@ const UserProfile = () => {
     return (
         <div>
             <Header />
+            {!loader ? (
             <main id="landing">
                 <div className={"container"} style={{ paddingTop: "11vmin" }}>
                     {
@@ -56,12 +58,12 @@ const UserProfile = () => {
                                     </div>
                                 </div>
                                 <div className="d-flex justify-content-center align-items-center p-2 py-4">
-                                    <div class="d-flex flex-column w-75">
-                                        <div class="p-2">User Stats</div>
-                                        <div class="p-2 ml-4">Watch List</div>
-                                        <div class="p-2 ml-4">Reviews</div>
-                                        <div class="p-2">Member Since</div>
-                                        <div class="p-2 ml-4">December 2019</div>
+                                    <div className="d-flex flex-column w-75">
+                                        <div className="p-2">User Stats</div>
+                                        <div className="p-2 ml-4">Watch List</div>
+                                        <div className="p-2 ml-4">Reviews</div>
+                                        <div className="p-2">Member Since</div>
+                                        <div className="p-2 ml-4">December 2019</div>
                                     </div>
                                 </div>
                             </div>
@@ -74,7 +76,7 @@ const UserProfile = () => {
                             </div>
                             <div className={"row w-100"}>
                                 {watchList !== null && watchList.map((movie, i)=>{
-                                  return(  <div className="col-md-4 movies p-2">
+                                  return(  <div className="col-md-4 movies p-2" key={i}>
                                     <section id="latest-movies" className="p-0 m-0">
                                         <div className="movies w-100">
                                             <WatchlistCard data={movie} index={i}/>
@@ -88,6 +90,7 @@ const UserProfile = () => {
                     }
                 </div>
             </main>
+            ) : <div className="fixed-loader"><Loader /><p>Fetching Profile Details</p></div>}
         </div>
     )
 }

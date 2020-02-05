@@ -74,7 +74,6 @@ const AddReviewModal = (props) => {
                     <Rating noOfStars={5} checkType="checked" />
                 </div>
                 <div className={"col-md-4 d-flex justify-content-around"}>
-                    <button className={"cancel__modal__btn"}>Cancel</button>
                     <button onClick={handleSubmit}>{loader ? "Loading..." : "Submit"}</button>
                 </div>
             </div>
