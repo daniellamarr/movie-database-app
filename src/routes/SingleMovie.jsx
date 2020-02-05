@@ -4,35 +4,103 @@ import Text from '../components/Text';
 import Rating from '../components/Rating';
 import Tag from '../components/Tag';
 import CastCard from '../components/CastCard';
-import {apiServiceClient} from '../util/axios-client';
+import { apiServiceClient } from '../util/axios-client';
 import Reviews from '../components/Reviews';
+import Axios from 'axios';
 import Loader from '../components/Loader';
 
+const { API_ROOT } = process.env;
+
 export default class SingleMovie extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			movie: {},
-			loading: false
-		};
+  constructor(props) {
+    super(props);
+    this.state = {
+      movie: {},
+      loading: false,
+      review: [],
+      addedToWatchlist: false
+    };
   }
 
   async getSingleMovie() {
     const { movieId } = this.props.match.params;
-		this.setState({loading: true});
-		const movieData = await apiServiceClient({
-			url: `/movies/${movieId}`,
-			method: "get"
-		});
-    this.setState({movie: movieData.data.data, loading: false});
+    this.setState({ loading: true });
+    const movieData = await apiServiceClient({
+      url: `/movies/${movieId}`,
+      method: "get"
+    });
+    this.setState({ movie: movieData.data.data, loading: false });
+  }
+  // TODO
+  getReviews() {
+    const { movieId } = this.props.match.params;
+    Axios.get(`${API_ROOT}/review?movieId=${movieId}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      this.setState({review: res.data.data})
+      if (res.data.status === "success") {
+      }
+    }).catch((err) => {
+    })
+  }
+  addToWatchList (movie){
+		var userToke = localStorage.getItem("token")
+		var data = {movieId:movie}
+		Axios.post(`${API_ROOT}/user/watchlist/add`, data, {
+            headers: {
+                'x-access-token': `moviedb${userToke}`,
+                "Content-Type": "application/json",
+            },
+        }).then((res) => {
+            if (res.data.status == "success") {
+              alert(res.data.message)
+              const userData = JSON.parse(localStorage.getItem('userData'));
+              userData.watchlist = res.data.data.watchlist;
+              localStorage.setItem('userData', JSON.stringify(userData));
+              this.checkWatchList(movie);
+            }
+        }).catch((err)=>{
+            alert(err)
+        })
+  }
+
+  removeFromWatchList (movie){
+		var userToke = localStorage.getItem("token")
+		var data = {movieId:movie}
+		Axios.post(`${API_ROOT}/user/watchlist/remove`, data, {
+            headers: {
+                'x-access-token': `moviedb${userToke}`,
+                "Content-Type": "application/json",
+            },
+        }).then((res) => {
+            if (res.data.status == "success") {
+              alert(res.data.message)
+              const userData = JSON.parse(localStorage.getItem('userData'));
+              userData.watchlist = res.data.data.watchlist;
+              localStorage.setItem('userData', JSON.stringify(userData));
+              this.checkWatchList(movie);
+            }
+        }).catch((err)=>{
+            alert(err)
+        })
+  }
+  
+  checkWatchList() {
+    const { movieId } = this.props.match.params;
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    return this.setState({ addedToWatchlist: userData.watchlist.includes(Number(movieId)) });
   }
 
   componentDidMount() {
+    this.checkWatchList();
+    this.getReviews();
     this.getSingleMovie();
   }
 
   render() {
-    const {movie} = this.state;
+    const { movie } = this.state;
     const rating = Math.floor((movie.vote_average / 10) * 5);
     return (
       <div>
@@ -62,9 +130,14 @@ export default class SingleMovie extends Component {
                     </Text>
                   </div>
                   <div className="movie-watchlist">
-                    <button>
-                      Add to watchlist
+                    {this.state.addedToWatchlist ?
+                    <button onClick={() => { this.removeFromWatchList(movie.id) }}>
+                      Remove from watchlist
                     </button>
+                    :
+                    <button onClick={() => { this.addToWatchList(movie.id) }}>
+                      Add to watchlist
+                    </button>}
                   </div>
                 </div>
                 <div className="tags">
@@ -93,10 +166,10 @@ export default class SingleMovie extends Component {
               </div>
             </section>
             <section id="movie-cast">
-              <Reviews movieDetail={movie}/>
+              <Reviews movieDetail={movie} reviews={this.state.review} />
             </section>
           </main>
-        ) : <div className="fixed-loader"><Loader /><p>Fetching Movies</p></div>}
+          ) : <div className="fixed-loader"><Loader /><p>Fetching Movie</p></div>}
       </div>
     )
   }

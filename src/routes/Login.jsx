@@ -74,6 +74,7 @@ const Login = (props) => {
         const userName = login.data.data.username
         localStorage.setItem('token', token);
         localStorage.setItem('userName', userName);
+        localStorage.setItem('userData', JSON.stringify(login.data.data));
         props.history.push("/")
       }
     } catch(err) {
