@@ -24,6 +24,37 @@ This is to prevent conflict on interests while pushing all our code in thesame r
 - Postgres Database
 
 
+#### Frontend Routes
+
+* Home - `/`
+* User profile - `/userprofile`
+* Single movie - `/movies/:movieId`
+* Signup - `/signup`
+* Login - `/login`
+
+
+#### Backend Routes
+
+* User can Signup - `POST /api/v1/auth/signup`
+
+* User can Login - `POST /api/v1/auth/login`
+
+* Get Latest movies - `GET /api/v1/movies`
+
+* Get movies by a search query - `GET /api/v1/movies/search`
+
+* Get Users Watchlist - `GET /api/v1/watchlist`
+
+* Get a single movie by its ID - `GET /api/v1/movies/:movieID`
+
+* Get user reviews for a movie by Its ID - `GET /api/v1/review`
+
+* User can review a movie - `POST /api/v1/review`
+
+* User can add a movie to their watchlist - `POST /api/v1/user/watchlist/add`
+
+* User can remove a movie from their watchlist - `POST /api/v1/user/watchlist/remove`
+
 
 #### Collaborators
 
