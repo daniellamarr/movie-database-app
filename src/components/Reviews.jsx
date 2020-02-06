@@ -66,9 +66,9 @@ const Reviews = (props) => {
                                 </div>
                             </div>
                         </div>
-                        {props.reviews.length > 0 && props.reviews.map(r=>{
+                        {props.reviews.length > 0 && props.reviews.map((r, i)=>{
                             return(
-                                <div className={"row w-100 mb-4"}>
+                                <div key={i} className={"row w-100 mb-4"}>
                             <div className={"col-md-2 mb-3"}>
                                 <div className={"review__image__wrapper"}>
                                     <img src={dummyImage} width="100%" height="100%" />
