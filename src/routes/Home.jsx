@@ -88,9 +88,10 @@ export default class Home extends Component {
 	}
 
 	checkWatchList(movieId) {
-		console.log(movieId)
 		const userData = JSON.parse(localStorage.getItem('userData'));
-		return this.setState({ addedToWatchlist: userData.watchlist.includes(Number(movieId)) });
+		if (userData !== null) {
+			return this.setState({ addedToWatchlist: userData.watchlist.includes(Number(movieId)) });
+		}
 	}
 
 	componentDidMount() {

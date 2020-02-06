@@ -90,7 +90,9 @@ export default class SingleMovie extends Component {
   checkWatchList() {
     const { movieId } = this.props.match.params;
     const userData = JSON.parse(localStorage.getItem('userData'));
-    return this.setState({ addedToWatchlist: userData.watchlist.includes(Number(movieId)) });
+    if (userData !== null) {
+      return this.setState({ addedToWatchlist: userData.watchlist.includes(Number(movieId)) });
+    }
   }
 
   componentDidMount() {
@@ -160,8 +162,8 @@ export default class SingleMovie extends Component {
                 <Text color="#fff">Cast</Text>
               </div>
               <div className="casts">
-                {movie.credits && movie.credits.cast.map(cast => (
-                  <CastCard cast={cast} />
+                {movie.credits && movie.credits.cast.map((cast, index) => (
+                  <CastCard key={index} cast={cast} />
                 ))}
               </div>
             </section>
